@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
-
+import MovieList from "./components/MovieList/MovieList";
+import MovieDetails from "./components/MovieDetails/MovieDetails";
 const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 
 
@@ -10,7 +11,7 @@ function App() {
   const [movieDetails, setMovieDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
+  const [detailsLoading, setDetailsLoading] = useState(false);
 
 useEffect(() =>{
  
@@ -25,24 +26,31 @@ useEffect(() =>{
   setLoading(true);
   setError("");
   const timeoutId = setTimeout(() => {
-    const url = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${trimmedQuery}`;
+   const url = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${trimmedQuery}`;
 
-    async function fetchMovies() {
-           
-      const response  = await fetch(url);
-      const data = await response.json();
-      console.log(data);
+   async function fetchMovies() {
+   try{       
+    const response  = await fetch(url);
+    const data = await response.json();
+    console.log(data);
 
-      if(data.Response === "False"){
-        setMovies([]);
-        setError(data.Error);
-        setLoading(false);
-        return;
-      }
-      setMovies(data.Search);
+    if(data.Response === "False"){
+      setMovies([]);
+      setError(data.Error);
       setLoading(false);
-      
+      return;
     }
+    setMovies(data.Search);
+   } catch(err) {
+
+    console.log("Something went wrong:", err);
+    setMovies([]);
+    setError("Something went wrong");
+
+   } finally {
+    setLoading(false);
+    }        
+   }
     fetchMovies();
   }, 500)
   return () => clearTimeout(timeoutId);
@@ -57,11 +65,26 @@ useEffect(() =>{
   const url = `https://www.omdbapi.com/?apikey=${API_KEY}&i=${selectedMovie.imdbID}`;
 
   async function fetchMovieDetails() {
-    const response = await fetch(url);
-    const data = await response.json();
-    console.log(data);
-    setMovieDetails(data);
-  }
+    setDetailsLoading(true);
+
+    try {
+      const response = await fetch(url);
+      const data = await response.json();
+
+      if(data.Response === "False"){
+        setError(data.Error);
+        return
+      }
+
+      console.log(data);
+      setMovieDetails(data);
+    } catch(err){
+      console.log("Something went wrong:", err);   
+      setError("Something went wrong"); 
+    } finally {
+      setDetailsLoading(false);
+    }
+}
   fetchMovieDetails();
 },[selectedMovie])
   
@@ -72,10 +95,20 @@ const movieToShow = movieDetails || selectedMovie;
 
 
   return (
-    <div className="app">
+  <div className="app">
 
       <h1>Movies</h1>
+      
 
+    {selectedMovie ? (
+      <MovieDetails movieToShow={movieToShow}
+                    onBack={() =>{setSelectedMovie(null);
+                                  setMovieDetails(null);
+                                  setError("");}}
+                    detailsLoading={detailsLoading}
+      />
+    ) : (
+    <>
       <input 
         type="text"
         value={query}
@@ -86,44 +119,18 @@ const movieToShow = movieDetails || selectedMovie;
       <p>{query}</p>
 
 
-    {loading && <p>Loading...</p>}
-    {error && <p>{error}</p>}
+      {loading && <p>Loading...</p>}
+      {error && <p>{error}</p>}
 
-    {selectedMovie ? (
-      <div>
-        <button 
-          onClick={() => {
-            setSelectedMovie(null);
-            setMovieDetails(null);
-          }}
-        >⬅️
-        </button>
-        <h1>{movieToShow.Title}</h1>
-        <p>{movieToShow.Year}</p>
-        <p>{movieToShow.Plot}</p>
-        <img src={movieToShow.Poster} alt="" />
-        
-      </div>
-    ) : (
-      movies.map((movie) =>(
-      <div key={movie.imdbID}
-           onClick={() => setSelectedMovie(movie)}
-      >
-        <div style={{display:"flex", gap:"20px", alignItems:"center"}}>
-          <h3>{movie.Title}</h3>
-          <h4>{movie.Year}</h4>
-        </div>
+      <MovieList movies={movies}
+                 onSelect={setSelectedMovie}
+      />
+      
+    </>
 
-        <img src={movie.Poster} alt="" />
-
-      </div>
-
-
-      ))
-    )
-    }
-    
-    </div>
-  )
+     )
+    }  
+  </div>
+  );
 }
 export default App
