@@ -5,19 +5,19 @@ return(
 <div className="moviesGrid">
 
       {movies.map((movie) =>(
-      <div key={movie.imdbID}
-           onClick={() => onselect(movie)}
+      <div key={movie.id}
+           onClick={() => onSelect(movie)}
            className="movieCard"
       >
         <div style={{display:"flex", gap:"20px", alignItems:"center"}}>
-          <h3>{movie.Title}</h3>
-          <h4>{movie.Year}</h4>
+          <h3>{movie.title}</h3>
+          <h4>{movie.release_date?.slice(0, 4)}</h4>
         </div>
         <div className="posterBox">
-          {movie.Poster !== "N/A" && (
+          {movie.poster_path && (
             <img className="moviePoster"
-                src={movie.Poster}
-                alt={movie.Title}
+                src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
+                alt={movie.title}
                 onError={(e) => {
                  e.currentTarget.style.display = "none"; 
                 }}

@@ -1,7 +1,6 @@
 import {useState, useEffect} from "react";
 import MovieList from "./components/MovieList/MovieList";
 import MovieDetails from "./components/MovieDetails/MovieDetails";
-const API_KEY = import.meta.env.VITE_OMDB_API_KEY;
 
 
 function App() {
@@ -12,6 +11,43 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [detailsLoading, setDetailsLoading] = useState(false);
+
+  const [trendingMovies, setTrendingMovies] = useState([]);
+
+  const [heroIndex, setHeroIndex] = useState(0);
+
+
+
+useEffect(() =>{
+  
+  if(trendingMovies.length ===  0) return;
+
+  const intervalId = setInterval(() => {
+      setHeroIndex((currentIndex) => {
+        return (currentIndex + 1) % trendingMovies.length
+      });    
+  }, 3000);
+
+  return () => clearInterval(intervalId);
+},[trendingMovies])  
+
+
+useEffect(() =>{
+
+  async function fetchTrendingMovies() {
+    const response = await fetch("/api/trending");
+    const data = await response.json();
+    setTrendingMovies(data.results);
+    console.log(data.results);
+    
+  }
+
+  fetchTrendingMovies();
+
+},[]);  
+
+
+
 
 useEffect(() =>{
  
@@ -26,7 +62,7 @@ useEffect(() =>{
   setLoading(true);
   setError("");
   const timeoutId = setTimeout(() => {
-   const url = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${trimmedQuery}`;
+  const url = `/api/search?query=${encodeURIComponent(trimmedQuery)}`;
 
    async function fetchMovies() {
    try{       
@@ -34,13 +70,13 @@ useEffect(() =>{
     const data = await response.json();
     console.log(data);
 
-    if(data.Response === "False"){
+    if(data.results.length === 0){
       setMovies([]);
-      setError(data.Error);
+      setError("No movies found");
       setLoading(false);
       return;
     }
-    setMovies(data.Search);
+    setMovies(data.results);
    } catch(err) {
 
     console.log("Something went wrong:", err);
@@ -59,39 +95,41 @@ useEffect(() =>{
 
 
 
-useEffect(() =>{
-
-  if(!selectedMovie) return;
-  const url = `https://www.omdbapi.com/?apikey=${API_KEY}&i=${selectedMovie.imdbID}`;
+useEffect(() => {
+  if(!selectedMovie || !selectedMovie.id) return;
+  
+  const url = `/api/movie?id=${selectedMovie.id}`;
 
   async function fetchMovieDetails() {
     setDetailsLoading(true);
-
-    try {
+    setError("");
+    try{
       const response = await fetch(url);
       const data = await response.json();
 
-      if(data.Response === "False"){
-        setError(data.Error);
-        return
+      if(data.error){
+        setError(data.error);
+        return;
       }
-
-      console.log(data);
+      console.log(data)
       setMovieDetails(data);
-    } catch(err){
-      console.log("Something went wrong:", err);   
-      setError("Something went wrong"); 
-    } finally {
-      setDetailsLoading(false);
-    }
+  } catch(err){
+    console.log("Something went wrong", err)
+    setError("Something went wrong");
+  } finally{
+    setDetailsLoading(false);
+  }
 }
-  fetchMovieDetails();
-},[selectedMovie])
-  
+
+fetchMovieDetails();
+}, [selectedMovie])
+
+
 
 
 const movieToShow = movieDetails || selectedMovie;
 
+const activeHeroMovie = trendingMovies[heroIndex];
 
 
   return (
@@ -122,14 +160,29 @@ const movieToShow = movieDetails || selectedMovie;
       {loading && <p>Loading...</p>}
       {error && <p>{error}</p>}
 
-      <MovieList movies={movies}
-                 onSelect={setSelectedMovie}
-      />
-      
-    </>
 
-     )
+      
+      {!query.trim() ? (
+        <MovieList movies={trendingMovies}
+                   onSelect={(movie) =>{
+                    setSelectedMovie(movie);
+                    setMovieDetails(null);
+                   }}/>
+      ) : (
+        <MovieList movies={movies} 
+                   onSelect={(movie) =>{
+                    setSelectedMovie(movie);
+                    setMovieDetails(null);
+                   }}
+        />)
+      }
+      
+      
+
+      
+    </>)
     }  
+    
   </div>
   );
 }
