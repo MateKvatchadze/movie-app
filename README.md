@@ -1,16 +1,60 @@
-# React + Vite
+# Movie App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React + Vite movie streaming-style application using the TMDB API.
 
-Currently, two official plugins are available:
+## Live Demo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+https://movie-app-five-sigma-57.vercel.app
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Trending movies from TMDB
+- Movie search
+- Movie details page
+- Runtime display
+- Poster and backdrop images
+- Serverless API routes with Vercel Functions
+- Hidden TMDB token through environment variables
+- Responsive movie grid
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Vite
+- JavaScript
+- CSS
+- TMDB API
+- Vercel
+- Git / GitHub
+
+## API Architecture
+
+The app does not call TMDB directly from the frontend.
+
+Frontend requests go through local API routes:
+
+- `/api/trending`
+- `/api/search`
+- `/api/movie`
+
+These API routes use `process.env.TMDB_TOKEN` on the server side, so the TMDB token is not exposed in the frontend code.
+
+## Current Status
+
+The project is still in development.
+
+Planned improvements:
+
+- Separate Home and Search pages
+- Hero banner with auto-changing trending movies
+- Watchlist with localStorage
+- Continue Watching section
+- Better movie details layout
+- TMDB credits section
+- Improved responsive design
+
+## TMDB Attribution
+
+This product uses the TMDB API but is not endorsed or certified by TMDB.
+
+Data and images are provided by TMDB.
