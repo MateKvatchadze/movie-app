@@ -1,22 +1,21 @@
 import {useState, useEffect} from "react";
-import MovieList from "./components/MovieList/MovieList";
-import MovieDetails from "./components/MovieDetails/MovieDetails";
+import { Routes, Route, Link } from "react-router-dom";
 
+import HomePage from "./pages/HomePage/HomePage";
+import SearchPage from "./pages/SearchPage/SearchPage";
+import MovieDetailsPage from "./pages/MovieDetailsPage/MovieDetailsPage";
 
 function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-  const [movieDetails, setMovieDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [detailsLoading, setDetailsLoading] = useState(false);
-
   const [trendingMovies, setTrendingMovies] = useState([]);
 
   const [heroIndex, setHeroIndex] = useState(0);
 
 
+//hero
 
 useEffect(() =>{
   
@@ -26,11 +25,13 @@ useEffect(() =>{
       setHeroIndex((currentIndex) => {
         return (currentIndex + 1) % trendingMovies.length
       });    
-  }, 3000);
+  }, 5000);
 
   return () => clearInterval(intervalId);
-},[trendingMovies])  
+},[trendingMovies]);  
 
+
+//Trending Movies
 
 useEffect(() =>{
 
@@ -38,7 +39,6 @@ useEffect(() =>{
     const response = await fetch("/api/trending");
     const data = await response.json();
     setTrendingMovies(data.results);
-    console.log(data.results);
     
   }
 
@@ -48,6 +48,7 @@ useEffect(() =>{
 
 
 
+//Search
 
 useEffect(() =>{
  
@@ -64,11 +65,10 @@ useEffect(() =>{
   const timeoutId = setTimeout(() => {
   const url = `/api/search?query=${encodeURIComponent(trimmedQuery)}`;
 
-   async function fetchMovies() {
+  async function fetchMovies() {
    try{       
     const response  = await fetch(url);
     const data = await response.json();
-    console.log(data);
 
     if(data.results.length === 0){
       setMovies([]);
@@ -94,96 +94,50 @@ useEffect(() =>{
 
 
 
-
-useEffect(() => {
-  if(!selectedMovie || !selectedMovie.id) return;
-  
-  const url = `/api/movie?id=${selectedMovie.id}`;
-
-  async function fetchMovieDetails() {
-    setDetailsLoading(true);
-    setError("");
-    try{
-      const response = await fetch(url);
-      const data = await response.json();
-
-      if(data.error){
-        setError(data.error);
-        return;
-      }
-      console.log(data)
-      setMovieDetails(data);
-  } catch(err){
-    console.log("Something went wrong", err)
-    setError("Something went wrong");
-  } finally{
-    setDetailsLoading(false);
-  }
-}
-
-fetchMovieDetails();
-}, [selectedMovie])
-
-
-
-
-const movieToShow = movieDetails || selectedMovie;
-
 const activeHeroMovie = trendingMovies[heroIndex];
 
 
-  return (
+return (
   <div className="app">
 
-      <h1>Movies</h1>
+    <h1>Movies</h1>
       
-
-    {selectedMovie ? (
-      <MovieDetails movieToShow={movieToShow}
-                    onBack={() =>{setSelectedMovie(null);
-                                  setMovieDetails(null);
-                                  setError("");}}
-                    detailsLoading={detailsLoading}
+    <nav>
+      <Link to="/" >Home</Link>
+      <Link to="/search">Search</Link>
+    </nav>
+    <Routes>
+      <Route 
+        path="/" 
+        element={
+          <HomePage 
+            trendingMovies={trendingMovies}
+            activeHeroMovie={activeHeroMovie}
+          />
+        } 
       />
-    ) : (
-    <>
-      <input 
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)} 
-        placeholder="Search Movie..."
+
+      <Route path="/search"
+             element={
+             <SearchPage
+                query={query}
+                setQuery={setQuery}
+                movies={movies}
+                loading={loading}
+                error={error}
+                trendingMovies={trendingMovies}
+              />} 
       />
-      
-      <p>{query}</p>
 
 
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
-
-
-      
-      {!query.trim() ? (
-        <MovieList movies={trendingMovies}
-                   onSelect={(movie) =>{
-                    setSelectedMovie(movie);
-                    setMovieDetails(null);
-                   }}/>
-      ) : (
-        <MovieList movies={movies} 
-                   onSelect={(movie) =>{
-                    setSelectedMovie(movie);
-                    setMovieDetails(null);
-                   }}
-        />)
-      }
-      
-      
-
-      
-    </>)
-    }  
-    
+      <Route path="/movie/:id"
+             element={
+              <MovieDetailsPage />
+             }
+      />           
+    </Routes>
+   
   </div>
-  );
+);
 }
 export default App
