@@ -1,18 +1,27 @@
 import {useState, useEffect} from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route, } from "react-router-dom";
 
 import HomePage from "./pages/HomePage/HomePage";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import MovieDetailsPage from "./pages/MovieDetailsPage/MovieDetailsPage";
+import BrowsePage from "./pages/BrowsePage/BrowsePage";
+import MoviesPage from "./pages/MoviesPage/MoviesPage";
+import TVShowsPage from "./pages/TVShowsPage/TVShowsPage";
+import CreditsPage from "./pages/CreditsPage/CreditsPage";
+
+import Sidebar from "./components/Sidebar/Sidebar";
+
+import useTrendingMovies from "./hooks/useTrendingMovies";
 
 function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [trendingMovies, setTrendingMovies] = useState([]);
-
   const [heroIndex, setHeroIndex] = useState(0);
+
+
+  const { trendingMovies, trendingLoading, trendingError } = useTrendingMovies();
 
 
 //hero
@@ -29,22 +38,6 @@ useEffect(() =>{
 
   return () => clearInterval(intervalId);
 },[trendingMovies]);  
-
-
-//Trending Movies
-
-useEffect(() =>{
-
-  async function fetchTrendingMovies() {
-    const response = await fetch("/api/trending");
-    const data = await response.json();
-    setTrendingMovies(data.results);
-    
-  }
-
-  fetchTrendingMovies();
-
-},[]);  
 
 
 
@@ -97,15 +90,13 @@ useEffect(() =>{
 const activeHeroMovie = trendingMovies[heroIndex];
 
 
+
 return (
   <div className="app">
-
-    <h1>Movies</h1>
-      
-    <nav>
-      <Link to="/" >Home</Link>
-      <Link to="/search">Search</Link>
-    </nav>
+     
+    <Sidebar />
+    
+  <main className="mainContent">
     <Routes>
       <Route 
         path="/" 
@@ -134,9 +125,18 @@ return (
              element={
               <MovieDetailsPage />
              }
-      />           
+      />         
+
+      <Route path="/browse" element={<BrowsePage />} />
+
+      <Route path="/movies" element={<MoviesPage />} />
+
+      <Route path="/tv" element={<TVShowsPage />} />
+      
+      <Route path="/credits" element={<CreditsPage />} />     
+         
     </Routes>
-   
+   </main>
   </div>
 );
 }

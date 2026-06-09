@@ -1,0 +1,67 @@
+.heroBanner {
+  min-height: 450px;
+  border-radius: 16px;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 32px;
+ 
+}
+
+.heroBanner::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to right, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.1)),
+    linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 640px;
+  padding: 48px 56px;
+}
+
+.heroContent h2 {
+  font-size: 52px;
+  line-height: 1;
+  margin: 0 0 16px;
+  color: rgb(252, 251, 214);
+}
+
+.heroContent p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #d7d7d7;
+  margin: 0;
+
+  display: -webkit-box;
+  line-clamp: 2;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+
+.heroActions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.heroPlayButton {
+  display: inline-block;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 18px 32px;
+  background: white;
+  color: black;
+}

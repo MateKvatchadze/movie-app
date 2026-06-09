@@ -1,19 +1,10 @@
 import MovieList from "../../components/MovieList/MovieList";
-
+import HeroBanner from "../../components/HeroBanner/HeroBanner";
 
 function HomePage({ trendingMovies, activeHeroMovie, onSelect }) {
   return (
-    <>
-    {activeHeroMovie && (
-        <div className="hero"
-            style={{
-              backgroundImage: `url(https://image.tmdb.org/t/p/original${activeHeroMovie.backdrop_path})`
-            }}
-        >
-            <h2>{activeHeroMovie.title}</h2>
-            <p>{activeHeroMovie.overview}</p>
-        </div>
-    )}
+    <>   
+    <HeroBanner movie={activeHeroMovie}/>
 
     <h2>Trending Movies</h2>
     

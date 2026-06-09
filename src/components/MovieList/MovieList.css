@@ -5,6 +5,7 @@
 }
 
 .movieCard {
+    text-decoration: none;
     width: 200px;
     cursor: pointer;
 }
