@@ -1,5 +1,6 @@
 import {useState, useEffect} from "react";
 import { Routes, Route, } from "react-router-dom";
+import { heroLogoPath } from "./components/HeroBanner/heroLogoPath";
 
 import HomePage from "./pages/HomePage/HomePage";
 import SearchPage from "./pages/SearchPage/SearchPage";
@@ -8,7 +9,6 @@ import BrowsePage from "./pages/BrowsePage/BrowsePage";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import TVShowsPage from "./pages/TVShowsPage/TVShowsPage";
 import CreditsPage from "./pages/CreditsPage/CreditsPage";
-
 import Sidebar from "./components/Sidebar/Sidebar";
 
 import useTrendingMovies from "./hooks/useTrendingMovies";
@@ -19,25 +19,82 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [heroIndex, setHeroIndex] = useState(0);
-
+  const [isHeroFading, setIsHeroFading] = useState(false);
+  const [heroLogo, setHeroLogo] = useState("");
 
   const { trendingMovies, trendingLoading, trendingError } = useTrendingMovies();
 
 
+  
 //hero
 
+
+
 useEffect(() =>{
+  let isCancelled = false;
   
   if(trendingMovies.length ===  0) return;
+  
+  async function loadFirstLogo() {
+    if(heroIndex === 0){
+      const firstHeroLogo = await heroLogoPath(trendingMovies[heroIndex].id)
 
-  const intervalId = setInterval(() => {
-      setHeroIndex((currentIndex) => {
-        return (currentIndex + 1) % trendingMovies.length
-      });    
-  }, 5000);
+      if(!isCancelled){
+        setHeroLogo(firstHeroLogo);
+      }
+    }
+   
+  }
+  loadFirstLogo();
 
-  return () => clearInterval(intervalId);
-},[trendingMovies]);  
+
+  const timeoutId = setTimeout(async () => {
+        const nextIndex =  (heroIndex + 1) % trendingMovies.length;
+        const nextMovie = trendingMovies[nextIndex];
+        
+        const nextHeroLogo = await heroLogoPath(nextMovie.id);
+
+
+        if(!nextMovie?.backdrop_path){
+          setHeroLogo(nextHeroLogo);
+          setHeroIndex(nextIndex);
+          return;
+        }
+        
+        const image = new Image();
+
+        image.onload = () => {
+          if (!isCancelled) {
+            setIsHeroFading(true);
+
+            setTimeout(() =>{
+              setHeroLogo(nextHeroLogo);
+              setHeroIndex(nextIndex);
+              setIsHeroFading(false);
+            }, 250);      
+          }
+        };
+
+        image.onerror = () => {
+          if (!isCancelled) {
+            setIsHeroFading(true);
+
+            setTimeout(() =>{
+              setHeroLogo(nextHeroLogo);
+              setHeroIndex(nextIndex);
+              setIsHeroFading(false);
+            }, 250);      
+          }
+        };
+
+        image.src = `https://image.tmdb.org/t/p/original${nextMovie.backdrop_path}`;    
+  }, 4500);
+
+    return () => {
+      isCancelled = true;
+      clearTimeout(timeoutId);
+    };
+},[trendingMovies, heroIndex]);  
 
 
 
@@ -90,7 +147,6 @@ useEffect(() =>{
 const activeHeroMovie = trendingMovies[heroIndex];
 
 
-
 return (
   <div className="app">
      
@@ -104,6 +160,8 @@ return (
           <HomePage 
             trendingMovies={trendingMovies}
             activeHeroMovie={activeHeroMovie}
+            isHeroFading={isHeroFading}
+            heroLogo={heroLogo}
           />
         } 
       />
@@ -120,7 +178,7 @@ return (
               />} 
       />
 
-
+              
       <Route path="/movie/:id"
              element={
               <MovieDetailsPage />

@@ -17,6 +17,7 @@ return (
       <MovieList 
         movies={movies}
         onSelect={onSelect}
+        variant="grid"
       />
     </>
     ): (
@@ -25,6 +26,7 @@ return (
       <MovieList 
         movies={trendingMovies}
         onSelect={onSelect}
+        variant="grid"
       />
     </>)
   }

@@ -1,11 +1,96 @@
+.movieListWrapper {
+  position: relative;
+}
+
+.rowControls{
+  position: absolute;
+  right: 0;
+  top: -50px;
+
+  display: flex;
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.rowButton {
+  width: 44px;
+  height: 36px;
+  border: none;
+
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.rowButton:hover {
+  background: rgba(255, 255, 255, 0.16);
+}
+
 .moviesGrid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 24px;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.moviesGrid .posterBox {
+  height: auto;
+}
+
+.moviesRow {
+  --visible-cards: 3;
+  --gap: 16px;
+
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc(
+    (100% - (var(--visible-cards) - 1) * var(--gap)) / var(--visible-cards)
+  );
+
+  gap: var(--gap);
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+}
+
+.moviesRow::-webkit-scrollbar {
+  display: none;
 }
 
 .movieCard {
-    text-decoration: none;
-    width: 200px;
-    cursor: pointer;
+  text-decoration: none;
+  cursor: pointer;
+  min-width: 0;
 }
+
+@media (min-width: 800px) {
+  .moviesRow {
+    --visible-cards: 4;
+  }
+}
+
+@media (min-width: 1000px) {
+  .moviesRow {
+    --visible-cards: 5;
+  }
+}
+
+@media (min-width: 1200px) {
+  .moviesRow {
+    --visible-cards: 6;
+  }
+}
+
+@media (min-width: 1400px) {
+  .moviesRow {
+    --visible-cards: 7;
+  }
+}
+
+@media (min-width: 1600px) {
+  .moviesRow {
+    --visible-cards: 8;
+  }
+}
+

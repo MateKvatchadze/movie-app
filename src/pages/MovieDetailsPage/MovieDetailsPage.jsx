@@ -45,6 +45,8 @@ function MovieDetailsPage(){
 
   const hours = movie.runtime ? Math.floor(movie.runtime / 60) : 0;
   const minutes = movie.runtime ? movie.runtime % 60 : 0;
+
+  
 return(
 <>
   <button onClick={() => navigate(-1)}>⬅️</button>

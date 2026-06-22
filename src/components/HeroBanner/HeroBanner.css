@@ -1,5 +1,5 @@
 .heroBanner {
-  min-height: 450px;
+  min-height: 540px;
   border-radius: 16px;
   background-size: cover;
   background-position: center;
@@ -8,8 +8,10 @@
   display: flex;
   align-items: flex-end;
   margin-bottom: 32px;
- 
+  transition: none;
 }
+
+
 
 .heroBanner::before {
   content: "";
@@ -20,9 +22,24 @@
     linear-gradient(to top, rgba(0, 0, 0, 0.55), transparent);
 }
 
+.heroBanner::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: black;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.heroBanner.heroBannerFading::after {
+  opacity: 0.75;
+}
+
 .heroContent {
   position: relative;
-  z-index: 1;
+  z-index: 3;
   max-width: 640px;
   padding: 48px 56px;
 }
@@ -64,4 +81,9 @@
   padding: 18px 32px;
   background: white;
   color: black;
+}
+
+.heroLogo {
+  max-height: 220px;
+  max-width: 528px;
 }

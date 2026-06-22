@@ -1,8 +1,31 @@
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  background: #0b0b0b;
+  color: white;
+}
+.app {
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #0b0b0b;
+}
+
+.mainContent {
+  margin-left: 312px;
+  padding: 24px 36px;
+  width: calc(100% - 312px);
+  background: #0b0b0b;
+}
+
 .posterBox {
-    width: 200px;
-    height: 280px;
-    background-color: #2b2b2b;
-    border-radius: 8px;    
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  background-color: #2b2b2b;
+  border-radius: 8px;
+  overflow: hidden;
 }
 
 .moviePoster {
@@ -12,14 +35,4 @@
 }
 .posterPlaceholder {
     background-color: #2b2b2b;
-}
-
-.app {
-  min-height: 100vh;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.mainContent {
-  margin-left: 252px;
-  padding: 24px;
 }
