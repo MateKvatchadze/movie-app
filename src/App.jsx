@@ -12,6 +12,8 @@ import CreditsPage from "./pages/CreditsPage/CreditsPage";
 import Sidebar from "./components/Sidebar/Sidebar";
 
 import useTrendingMovies from "./hooks/useTrendingMovies";
+import usePopularMovies from "./hooks/usePopularMovies";
+import useTopRatedMovies from "./hooks/useTopRatedMovies";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -23,8 +25,8 @@ function App() {
   const [heroLogo, setHeroLogo] = useState("");
 
   const { trendingMovies, trendingLoading, trendingError } = useTrendingMovies();
-
-
+  const { popularMovies, popularLoading, popularError } = usePopularMovies();
+  const { topRatedMovies, topRatedLoading, topRatedError } = useTopRatedMovies();
   
 //hero
 
@@ -162,6 +164,8 @@ return (
             activeHeroMovie={activeHeroMovie}
             isHeroFading={isHeroFading}
             heroLogo={heroLogo}
+            popularMovies={popularMovies}
+            topRatedMovies={topRatedMovies}
           />
         } 
       />
