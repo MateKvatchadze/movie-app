@@ -8,12 +8,20 @@ import MovieDetailsPage from "./pages/MovieDetailsPage/MovieDetailsPage";
 import BrowsePage from "./pages/BrowsePage/BrowsePage";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import TVShowsPage from "./pages/TVShowsPage/TVShowsPage";
+import AnimePage from "./pages/AnimePage/AnimePage";
 import CreditsPage from "./pages/CreditsPage/CreditsPage";
 import Sidebar from "./components/Sidebar/Sidebar";
+
 
 import useTrendingMovies from "./hooks/useTrendingMovies";
 import usePopularMovies from "./hooks/usePopularMovies";
 import useTopRatedMovies from "./hooks/useTopRatedMovies";
+import useTrendingTvShows from "./hooks/useTrendingTvShows";
+import usePopularTvShows from "./hooks/usePopularTvShows";
+import useTopRatedTvShows from "./hooks/useTopRatedTvShows";
+import useTrendingAnime from "./hooks/useTrendingAnime";
+import usePopularAnime from "./hooks/usePopularAnime";
+import useTopRatedAnime from "./hooks/useTopRatedAnime";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -24,14 +32,22 @@ function App() {
   const [isHeroFading, setIsHeroFading] = useState(false);
   const [heroLogo, setHeroLogo] = useState("");
 
+//hooks
+ //movies
   const { trendingMovies, trendingLoading, trendingError } = useTrendingMovies();
   const { popularMovies, popularLoading, popularError } = usePopularMovies();
   const { topRatedMovies, topRatedLoading, topRatedError } = useTopRatedMovies();
-  
+ //Tv Shows
+  const { trendingTvShows, trendingTvLoading, trendingTvError } = useTrendingTvShows();
+  const { popularTvShows, popularTvLoading, popularTvError } = usePopularTvShows();
+  const { topRatedTvShows, topRatedTvLoading, topRatedTvError } = useTopRatedTvShows();
+ //Anime
+  const { trendingAnime, trendingAnimeLoading, trendingAnimeError } = useTrendingAnime();
+  const { popularAnime, popularAnimeLoading, popularAnimeError } = usePopularAnime();
+  const { topRatedAnime, topRatedAnimeLoading, topRatedAnimeError } = useTopRatedAnime();
+
+
 //hero
-
-
-
 useEffect(() =>{
   let isCancelled = false;
   
@@ -166,6 +182,10 @@ return (
             heroLogo={heroLogo}
             popularMovies={popularMovies}
             topRatedMovies={topRatedMovies}
+
+            trendingTvShows={trendingTvShows}
+            popularTvShows={popularTvShows}
+            topRatedTvShows={topRatedTvShows}
           />
         } 
       />
@@ -191,9 +211,32 @@ return (
 
       <Route path="/browse" element={<BrowsePage />} />
 
-      <Route path="/movies" element={<MoviesPage />} />
+      <Route path="/movies" 
+             element={
+              <MoviesPage 
+                trendingMovies={trendingMovies}
+                popularMovies={popularMovies}
+                topRatedMovies={topRatedMovies}
+                />} 
+      />
 
-      <Route path="/tv" element={<TVShowsPage />} />
+      <Route path="/tv" 
+             element={
+              <TVShowsPage 
+                trendingTvShows={trendingTvShows}
+                popularTvShows={popularTvShows}
+                topRatedTvShows={topRatedTvShows}
+              />} 
+      />
+
+      <Route path="/anime"
+             element={
+              <AnimePage 
+                trendingAnime={trendingAnime}
+                popularAnime={popularAnime}
+                topRatedAnime={topRatedAnime}
+              />}
+      />
       
       <Route path="/credits" element={<CreditsPage />} />     
          

@@ -33,6 +33,10 @@ function Sidebar() {
         <NavLink to="/tv" className="sidebarLink">
           TV Shows
         </NavLink>
+
+        <NavLink to="/Anime" className="sidebarLink">
+          Anime
+        </NavLink>
              
       </nav>
 

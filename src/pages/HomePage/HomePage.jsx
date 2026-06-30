@@ -2,7 +2,9 @@ import MovieList from "../../components/MovieList/MovieList";
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
 import "./HomePage.css";
 
-function HomePage({ trendingMovies, activeHeroMovie, isHeroFading, heroLogo, popularMovies, topRatedMovies, }) {
+function HomePage({ trendingMovies, activeHeroMovie, isHeroFading, heroLogo, popularMovies, topRatedMovies,
+                    trendingTvShows, popularTvShows, topRatedTvShows 
+                  }){
   return (
     <>
     <HeroBanner 
@@ -25,6 +27,21 @@ function HomePage({ trendingMovies, activeHeroMovie, isHeroFading, heroLogo, pop
         <h2>Top Rated Movies</h2>
         <MovieList movies={topRatedMovies} variant="row" />
       </section>   
+
+      <section className="movieSection">
+        <h2>Trending Shows</h2>
+        <MovieList movies={trendingTvShows} variant="row" />
+      </section>       
+
+      <section className="movieSection">
+        <h2>Popular Shows</h2>
+        <MovieList movies={popularTvShows} variant="row" />
+      </section>         
+
+      <section className="movieSection">
+        <h2>Top Rated Shows</h2>
+        <MovieList movies={topRatedTvShows} variant="row" />
+      </section>           
     </>
   );
 }
