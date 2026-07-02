@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 function MovieDetailsPage(){
 
   const { id } = useParams();
+  const type = window.location.pathname.startsWith("/tv") ? "tv" : "movie";
   
   const [movie, setMovie] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -18,7 +19,7 @@ function MovieDetailsPage(){
       setLoading(true);
       setError("");
       try{
-        const response = await fetch(`/api/movie?id=${id}`);
+        const response = await fetch(`/api/movie?id=${id}&type=${type}`);
         const data = await response.json();
 
         if(data.error) {
@@ -37,7 +38,7 @@ function MovieDetailsPage(){
       }  
     }
     fetchMovie();
-  },[id]);
+  },[id, type]);
 
   if (loading) return <p>Loading movie...</p>;
   if (error) return <p>{error}</p>;

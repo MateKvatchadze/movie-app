@@ -47,18 +47,22 @@ return(
       ref={variant === "row" ? rowRef : null} 
   >
     
-    {movies.map((movie) =>(
+    {movies.map((media) =>(
     <Link 
-      key={movie.id}
-      to={`/movie/${movie.id}`}
+      key={media.id}
+      to={`/${media.media_type || "movie"}/${media.id}`}
       className="movieCard"
     >
       
       <div className="posterBox">
-        {movie.poster_path && (
+        {media.poster_path && (
           <img className="moviePoster"
-              src={`https://image.tmdb.org/t/p/w200${movie.poster_path}`}
-              alt={movie.title}
+              src={
+                media.poster_path.startsWith("http")
+                ? media.poster_path
+                : `https://image.tmdb.org/t/p/w200${media.poster_path}`
+              }
+              alt={media.title}
               onError={(e) => {
               e.currentTarget.style.display = "none"; 
               }}
@@ -67,8 +71,8 @@ return(
       </div>
 
       <div style={{display:"flex", gap:"20px", alignItems:"center"}}>
-        <h3>{movie.title}</h3>
-        <h4>{movie.release_date?.slice(0, 4)}</h4>
+        <h3>{media.title}</h3>
+        <h4>{media.release_date?.slice(0, 4)}</h4>
       </div>
           
     </Link>

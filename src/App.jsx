@@ -11,17 +11,17 @@ import TVShowsPage from "./pages/TVShowsPage/TVShowsPage";
 import AnimePage from "./pages/AnimePage/AnimePage";
 import CreditsPage from "./pages/CreditsPage/CreditsPage";
 import Sidebar from "./components/Sidebar/Sidebar";
-
+import AnimeDetailsPage from "./pages/AnimeDetailsPage/AnimeDetailsPage";
 
 import useTrendingMovies from "./hooks/useTrendingMovies";
 import usePopularMovies from "./hooks/usePopularMovies";
 import useTopRatedMovies from "./hooks/useTopRatedMovies";
+
 import useTrendingTvShows from "./hooks/useTrendingTvShows";
 import usePopularTvShows from "./hooks/usePopularTvShows";
 import useTopRatedTvShows from "./hooks/useTopRatedTvShows";
-import useTrendingAnime from "./hooks/useTrendingAnime";
-import usePopularAnime from "./hooks/usePopularAnime";
-import useTopRatedAnime from "./hooks/useTopRatedAnime";
+
+import useAnimeSections from "./hooks/useAnimeSections";
 
 function App() {
   const [query, setQuery] = useState("");
@@ -42,9 +42,7 @@ function App() {
   const { popularTvShows, popularTvLoading, popularTvError } = usePopularTvShows();
   const { topRatedTvShows, topRatedTvLoading, topRatedTvError } = useTopRatedTvShows();
  //Anime
-  const { trendingAnime, trendingAnimeLoading, trendingAnimeError } = useTrendingAnime();
-  const { popularAnime, popularAnimeLoading, popularAnimeError } = usePopularAnime();
-  const { topRatedAnime, topRatedAnimeLoading, topRatedAnimeError } = useTopRatedAnime();
+  const { trendingAnime, popularAnime, topRatedAnime, animeLoading, animeError } = useAnimeSections();
 
 
 //hero
@@ -203,11 +201,9 @@ return (
       />
 
               
-      <Route path="/movie/:id"
-             element={
-              <MovieDetailsPage />
-             }
-      />         
+      <Route path="/movie/:id"element={<MovieDetailsPage />}/>  
+      <Route path="/tv/:id" element={<MovieDetailsPage />} />       
+      <Route path="/anime/:id" element={<AnimeDetailsPage />}/>              
 
       <Route path="/browse" element={<BrowsePage />} />
 
