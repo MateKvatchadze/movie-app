@@ -1,6 +1,10 @@
 import MovieList from "../../components/MovieList/MovieList";
 
-function MoviesPage({ trendingMovies, popularMovies, topRatedMovies }) {
+import useMovieSections from "../../hooks/useMovieSections";
+
+function MoviesPage() {
+  const { trendingMovies, popularMovies, topRatedMovies } = useMovieSections();
+
   return (
   <>
     <section className="moveieSection">

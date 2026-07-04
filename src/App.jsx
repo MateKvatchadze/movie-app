@@ -13,15 +13,9 @@ import CreditsPage from "./pages/CreditsPage/CreditsPage";
 import Sidebar from "./components/Sidebar/Sidebar";
 import AnimeDetailsPage from "./pages/AnimeDetailsPage/AnimeDetailsPage";
 
-import useTrendingMovies from "./hooks/useTrendingMovies";
-import usePopularMovies from "./hooks/usePopularMovies";
-import useTopRatedMovies from "./hooks/useTopRatedMovies";
-
-import useTrendingTvShows from "./hooks/useTrendingTvShows";
-import usePopularTvShows from "./hooks/usePopularTvShows";
-import useTopRatedTvShows from "./hooks/useTopRatedTvShows";
-
 import useAnimeSections from "./hooks/useAnimeSections";
+import useMovieSections from "./hooks/useMovieSections";
+
 
 function App() {
   const [query, setQuery] = useState("");
@@ -34,13 +28,8 @@ function App() {
 
 //hooks
  //movies
-  const { trendingMovies, trendingLoading, trendingError } = useTrendingMovies();
-  const { popularMovies, popularLoading, popularError } = usePopularMovies();
-  const { topRatedMovies, topRatedLoading, topRatedError } = useTopRatedMovies();
- //Tv Shows
-  const { trendingTvShows, trendingTvLoading, trendingTvError } = useTrendingTvShows();
-  const { popularTvShows, popularTvLoading, popularTvError } = usePopularTvShows();
-  const { topRatedTvShows, topRatedTvLoading, topRatedTvError } = useTopRatedTvShows();
+  const { trendingMovies } = useMovieSections();
+
  //Anime
   const { trendingAnime, popularAnime, topRatedAnime, animeLoading, animeError } = useAnimeSections();
 
@@ -174,16 +163,9 @@ return (
         path="/" 
         element={
           <HomePage 
-            trendingMovies={trendingMovies}
             activeHeroMovie={activeHeroMovie}
             isHeroFading={isHeroFading}
             heroLogo={heroLogo}
-            popularMovies={popularMovies}
-            topRatedMovies={topRatedMovies}
-
-            trendingTvShows={trendingTvShows}
-            popularTvShows={popularTvShows}
-            topRatedTvShows={topRatedTvShows}
           />
         } 
       />
@@ -196,7 +178,6 @@ return (
                 movies={movies}
                 loading={loading}
                 error={error}
-                trendingMovies={trendingMovies}
               />} 
       />
 
@@ -209,20 +190,12 @@ return (
 
       <Route path="/movies" 
              element={
-              <MoviesPage 
-                trendingMovies={trendingMovies}
-                popularMovies={popularMovies}
-                topRatedMovies={topRatedMovies}
-                />} 
+              <MoviesPage />} 
       />
 
       <Route path="/tv" 
              element={
-              <TVShowsPage 
-                trendingTvShows={trendingTvShows}
-                popularTvShows={popularTvShows}
-                topRatedTvShows={topRatedTvShows}
-              />} 
+              <TVShowsPage />} 
       />
 
       <Route path="/anime"

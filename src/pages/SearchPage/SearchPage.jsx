@@ -1,7 +1,12 @@
 import MovieList from "../../components/MovieList/MovieList";
 
+import useMovieSections from "../../hooks/useMovieSections";
 
-function SearchPage({ query, setQuery, movies, loading, error, onSelect, trendingMovies }) {
+
+function SearchPage({ query, setQuery, movies, loading, error, onSelect }) {
+
+  const { trendingMovies } = useMovieSections();
+  
 return (
 <>
   <h2>Search Page</h2>

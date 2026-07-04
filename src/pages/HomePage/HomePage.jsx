@@ -1,10 +1,14 @@
+import "./HomePage.css";
 import MovieList from "../../components/MovieList/MovieList";
 import HeroBanner from "../../components/HeroBanner/HeroBanner";
-import "./HomePage.css";
 
-function HomePage({ trendingMovies, activeHeroMovie, isHeroFading, heroLogo, popularMovies, topRatedMovies,
-                    trendingTvShows, popularTvShows, topRatedTvShows 
-                  }){
+import useMovieSections from "../../hooks/useMovieSections";
+import useTvSections from "../../hooks/useTvSections";
+
+function HomePage({ activeHeroMovie, isHeroFading, heroLogo }){
+
+  const { trendingMovies, popularMovies, topRatedMovies } = useMovieSections();
+  const { trendingTvShows, popularTvShows, topRatedTvShows } = useTvSections();                
   return (
     <>
     <HeroBanner 

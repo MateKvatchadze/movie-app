@@ -1,6 +1,11 @@
 import MovieList from "../../components/MovieList/MovieList";
 
-function TVShowsPage({ trendingTvShows, popularTvShows, topRatedTvShows }) {
+import useTvSections from "../../hooks/useTvSections";
+
+function TVShowsPage() {
+
+  const { trendingTvShows, popularTvShows, topRatedTvShows } = useTvSections();     
+  
   return (
   <>
     <section className="movieSection">
