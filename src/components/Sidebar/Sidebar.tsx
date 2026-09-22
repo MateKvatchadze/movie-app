@@ -1,54 +1,59 @@
-import { NavLink } from "react-router-dom";
-
 import "./Sidebar.css";
+import {
+  FiHome, FiSearch, FiGrid, FiFilm, FiTv, FiStar, FiMoreHorizontal,
+} 
+from "react-icons/fi";
+import { NavLink } from "react-router-dom";
 
 function Sidebar() {
   return (
     <aside className="sidebar" aria-label="Main navigation">
-
       <h1 className="sidebarLogo">CineVault</h1>
 
-      <nav className="sidebarGroup">
+      <nav className="sidebarGroup mainGroup">
         <NavLink to="/" className="sidebarLink">
-          Home
+          <FiHome />
+          <span>Home</span>
         </NavLink>
 
         <NavLink to="/search" className="sidebarLink">
-          Search
+          <FiSearch />
+          <span>Search</span>
         </NavLink>
 
         <NavLink to="/browse" className="sidebarLink">
-          Browse
+          <FiGrid />
+          <span>Browse</span>
         </NavLink>
       </nav>
 
-
-      <nav className="sidebarGroup" aria-label="Media navigation">
+      <nav className="sidebarGroup mediaGroup" aria-label="Media navigation">
         <p className="sidebarGroupTitle">MEDIA</p>
 
         <NavLink to="/movies" className="sidebarLink">
-          Movies
+          <FiFilm />
+          <span>Movies</span>
         </NavLink>
 
         <NavLink to="/tv" className="sidebarLink">
-          TV Shows
+          <FiTv />
+          <span>TV Shows</span>
         </NavLink>
 
-        <NavLink to="/Anime" className="sidebarLink">
-          Anime
+        <NavLink to="/anime" className="sidebarLink">
+          <FiStar />
+          <span>Anime</span>
         </NavLink>
-             
       </nav>
 
-
-      <nav className="sidebarGroup">
+      <nav className="sidebarGroup moreGroup">
         <p className="sidebarGroupTitle">MORE</p>
 
         <NavLink to="/credits" className="sidebarLink">
-          Legal / Credits
+          <FiMoreHorizontal />
+          <span>More</span>
         </NavLink>
       </nav>
-
     </aside>
   );
 }

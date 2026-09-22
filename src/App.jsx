@@ -10,7 +10,7 @@ import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import TVShowsPage from "./pages/TVShowsPage/TVShowsPage";
 import AnimePage from "./pages/AnimePage/AnimePage";
 import CreditsPage from "./pages/CreditsPage/CreditsPage";
-import Sidebar from "./components/Sidebar/Sidebar";
+import Sidebar from "./components/Sidebar/Sidebar"; 
 import AnimeDetailsPage from "./pages/AnimeDetailsPage/AnimeDetailsPage";
 
 import useAnimeSections from "./hooks/useAnimeSections";
@@ -18,10 +18,6 @@ import useMovieSections from "./hooks/useMovieSections";
 
 
 function App() {
-  const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [heroIndex, setHeroIndex] = useState(0);
   const [isHeroFading, setIsHeroFading] = useState(false);
   const [heroLogo, setHeroLogo] = useState("");
@@ -102,53 +98,6 @@ useEffect(() =>{
 },[trendingMovies, heroIndex]);  
 
 
-
-//Search
-
-useEffect(() =>{
- 
-  const trimmedQuery = query.trim();
-
-  if(!trimmedQuery){
-    setMovies([]);
-    setError("");
-    setLoading(false);
-    return;
-  }
-  setLoading(true);
-  setError("");
-  const timeoutId = setTimeout(() => {
-  const url = `/api/search?query=${encodeURIComponent(trimmedQuery)}`;
-
-  async function fetchMovies() {
-   try{       
-    const response  = await fetch(url);
-    const data = await response.json();
-
-    if(data.results.length === 0){
-      setMovies([]);
-      setError("No movies found");
-      setLoading(false);
-      return;
-    }
-    setMovies(data.results);
-   } catch(err) {
-
-    console.log("Something went wrong:", err);
-    setMovies([]);
-    setError("Something went wrong");
-
-   } finally {
-    setLoading(false);
-    }        
-   }
-    fetchMovies();
-  }, 500)
-  return () => clearTimeout(timeoutId);
-},[query])
-
-
-
 const activeHeroMovie = trendingMovies[heroIndex];
 
 
@@ -172,13 +121,8 @@ return (
 
       <Route path="/search"
              element={
-             <SearchPage
-                query={query}
-                setQuery={setQuery}
-                movies={movies}
-                loading={loading}
-                error={error}
-              />} 
+              <SearchPage />
+             } 
       />
 
               
@@ -200,11 +144,7 @@ return (
 
       <Route path="/anime"
              element={
-              <AnimePage 
-                trendingAnime={trendingAnime}
-                popularAnime={popularAnime}
-                topRatedAnime={topRatedAnime}
-              />}
+              <AnimePage />}
       />
       
       <Route path="/credits" element={<CreditsPage />} />     
@@ -214,4 +154,4 @@ return (
   </div>
 );
 }
-export default App
+export default App;

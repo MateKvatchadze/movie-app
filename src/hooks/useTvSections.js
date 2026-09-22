@@ -1,47 +1,20 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchTvSections, mediaQueryKeys } from "../api/mediaApi";
 
 function useTvSections() {
-  const [trendingTvShows, setTrendingTvShows] = useState([]);
-  const [popularTvShows, setPopularTvShows] = useState([]);
-  const [topRatedTvShows, setTopRatedTvShows] = useState([]);
-
-  const [tvLoading, setTvLoading] = useState(false);
-  const [tvError, setTvError] = useState("");
-
-  useEffect(() => {
-    async function fetchTvSections() {
-      try {
-        setTvLoading(true);
-        setTvError("");
-
-        const response = await fetch("/api/tmdb?type=tv");
-        const data = await response.json();
-
-        if (!response.ok || data.error) {
-          setTvError(data.error || "Failed to fetch TV shows");
-          return;
-        }
-
-        setTrendingTvShows(data.trending);
-        setPopularTvShows(data.popular);
-        setTopRatedTvShows(data.topRated);
-      } catch (error) {
-        console.log("TV sections error:", error);
-        setTvError("Something went wrong");
-      } finally {
-        setTvLoading(false);
-      }
-    }
-
-    fetchTvSections();
-  }, []);
+  const { data, isLoading, error } = useQuery({
+    queryKey: mediaQueryKeys.tvSections,
+    queryFn: fetchTvSections,
+    staleTime: 1000 * 60 * 10,
+    gcTime: 1000 * 60 * 30,
+  });
 
   return {
-    trendingTvShows,
-    popularTvShows,
-    topRatedTvShows,
-    tvLoading,
-    tvError,
+    trendingTvShows: data?.trending || [],
+    popularTvShows: data?.popular || [],
+    topRatedTvShows: data?.topRated || [],
+    tvLoading: isLoading,
+    tvError: error?.message || "",
   };
 }
 

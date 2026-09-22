@@ -1,0 +1,137 @@
+.detailsPage {
+  padding: 32px;
+  color: white;
+}
+
+.backButton {
+  margin-bottom: 24px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.detailsType {
+  opacity: 0.7;
+  margin-bottom: 12px;
+}
+
+.detailsHero {
+  display: flex;
+  gap: 32px;
+  align-items: flex-start;
+}
+
+.detailsPosterBox {
+  flex-shrink: 0;
+  width: 300px;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #222;
+}
+
+.detailsPoster {
+  width: 100%;
+  display: block;
+}
+
+.detailsInfo {
+  max-width: 760px;
+}
+
+.detailsInfo h1 {
+  font-size: 48px;
+  margin: 0 0 12px;
+}
+
+.detailsMeta {
+  opacity: 0.75;
+  margin-bottom: 20px;
+}
+
+.detailsOverview {
+  line-height: 1.7;
+  font-size: 17px;
+}
+
+.genresList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.genresList span {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.trailerBox {
+  margin-top: 40px;
+  width: 100%;
+  max-width: 900px;
+}
+
+.trailerBox iframe {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+  border-radius: 18px;
+}
+
+
+@media (max-width: 768px) {
+  .detailsPage {
+    padding: 20px;
+  }
+
+  .detailsHero {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .detailsPosterBox {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .detailsInfo h1 {
+    font-size: 34px;
+  }
+
+  .detailsOverview {
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .trailerBox {
+    margin-top: 32px;
+  }
+
+  .genresList span {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .detailsPage {
+    padding: 16px;
+  }
+
+  .detailsInfo h1 {
+    font-size: 28px;
+  }
+
+  .detailsPosterBox {
+    max-width: 260px;
+  }
+
+  .detailsMeta {
+    font-size: 14px;
+  }
+
+  .backButton {
+    padding: 8px 12px;
+  }
+}

@@ -1,47 +1,20 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchMovieSections, mediaQueryKeys } from "../api/mediaApi";
 
 function useMovieSections() {
-  const [trendingMovies, setTrendingMovies] = useState([]);
-  const [popularMovies, setPopularMovies] = useState([]);
-  const [topRatedMovies, setTopRatedMovies] = useState([]);
-
-  const [moviesLoading, setMoviesLoading] = useState(false);
-  const [moviesError, setMoviesError] = useState("");
-
-  useEffect(() => {
-    async function fetchMovieSections() {
-      try {
-        setMoviesLoading(true);
-        setMoviesError("");
-
-        const response = await fetch("/api/tmdb?type=movie");
-        const data = await response.json();
-
-        if (!response.ok || data.error) {
-          setMoviesError(data.error || "Failed to fetch movies");
-          return;
-        }
-
-        setTrendingMovies(data.trending);
-        setPopularMovies(data.popular);
-        setTopRatedMovies(data.topRated);
-      } catch (error) {
-        console.log("Movie sections error:", error);
-        setMoviesError("Something went wrong");
-      } finally {
-        setMoviesLoading(false);
-      }
-    }
-
-    fetchMovieSections();
-  }, []);
+  const { data, isLoading, error } = useQuery({
+    queryKey: mediaQueryKeys.movieSections,
+    queryFn: fetchMovieSections,
+    staleTime: 1000 * 60 * 10,
+    gcTime: 1000 * 60 * 30,
+  });
 
   return {
-    trendingMovies,
-    popularMovies,
-    topRatedMovies,
-    moviesLoading,
-    moviesError,
+    trendingMovies: data?.trending || [],
+    popularMovies: data?.popular || [],
+    topRatedMovies: data?.topRated || [],
+    moviesLoading: isLoading,
+    moviesError: error?.message || "",
   };
 }
 

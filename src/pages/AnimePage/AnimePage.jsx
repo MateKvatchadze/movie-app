@@ -1,6 +1,8 @@
 import MovieList from "../../components/MovieList/MovieList";
+import useAnimeSections from "../../hooks/useAnimeSections";
 
-function AnimePage({ trendingAnime, popularAnime, topRatedAnime }){
+function AnimePage(){
+  const { trendingAnime, popularAnime, topRatedAnime } = useAnimeSections();
   return(
    <>
    <section className="movieSection">

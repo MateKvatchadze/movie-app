@@ -70,7 +70,7 @@ return(
         )}
       </div>
 
-      <div style={{display:"flex", gap:"20px", alignItems:"center"}}>
+      <div className="movieCardInfo">
         <h3>{media.title}</h3>
         <h4>{media.release_date?.slice(0, 4)}</h4>
       </div>

@@ -5,8 +5,11 @@ import HeroBanner from "../../components/HeroBanner/HeroBanner";
 import useMovieSections from "../../hooks/useMovieSections";
 import useTvSections from "../../hooks/useTvSections";
 
-function HomePage({ activeHeroMovie, isHeroFading, heroLogo }){
+import usePrefetchMediaSections from "../../hooks/usePrefetchMediaSections";
 
+function HomePage({ activeHeroMovie, isHeroFading, heroLogo }){
+  usePrefetchMediaSections();
+  
   const { trendingMovies, popularMovies, topRatedMovies } = useMovieSections();
   const { trendingTvShows, popularTvShows, topRatedTvShows } = useTvSections();                
   return (

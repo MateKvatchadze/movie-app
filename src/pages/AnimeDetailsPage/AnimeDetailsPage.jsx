@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import useAnimeDetails from "../../hooks/useAnimeDetails";
+import "../MovieDetailsPage/MovieDetailsPage.css";
 
 function AnimeDetailsPage() {
   const { id } = useParams();
@@ -12,35 +13,52 @@ function AnimeDetailsPage() {
   if (!anime) return <p>No anime found</p>;
 
   return (
-    <>
-      <button onClick={() => navigate(-1)}>⬅️</button>
+    <div className="detailsPage">
+      <button className="backButton" onClick={() => navigate(-1)}>
+        ⬅️ Back
+      </button>
 
-      <h1>{anime.title}</h1>
+      <p className="detailsType">Anime</p>
 
-      <p>{anime.release_date || "Unknown"}</p>
+      <section className="detailsHero">
+        <div className="detailsPosterBox">
+          {anime.posterPath && (
+            <img
+              className="detailsPoster"
+              src={anime.posterPath}
+              alt={anime.title}
+              onError={(e) => {
+                e.currentTarget.style.display = "none";
+              }}
+            />
+          )}
+        </div>
 
-      {anime.genres?.length > 0 && (
-        <p>{anime.genres.join(", ")}</p>
-      )}
+        <div className="detailsInfo">
+          <h1>{anime.title}</h1>
 
-      {anime.poster_path && (
-        <img
-          className="moviePoster"
-          src={anime.poster_path}
-          alt={anime.title}
-          onError={(e) => {
-            e.currentTarget.style.display = "none";
-          }}
-        />
-      )}
+          <p className="detailsMeta">
+            {anime.releaseYear}
+            {anime.episodes && ` • ${anime.episodes} episodes`}
+            {anime.duration && ` • ${anime.duration} min/ep`}
+          </p>
 
-      <p>{anime.description}</p>
+          <p className="detailsOverview">{anime.overview}</p>
 
-      <p>Episodes: {anime.episodes || "Unknown"}</p>
-      <p>Status: {anime.status || "Unknown"}</p>
-      <p>Format: {anime.format || "Unknown"}</p>
-      <p>Rating: {anime.vote_average || "N/A"}</p>
-    </>
+          {anime.genres?.length > 0 && (
+            <div className="genresList">
+              {anime.genres.map((genre) => (
+                <span key={genre}>{genre}</span>
+              ))}
+            </div>
+          )}
+
+          <p>Status: {anime.status || "Unknown"}</p>
+          <p>Format: {anime.format || "Unknown"}</p>
+          <p>Rating: {anime.voteAverage || "N/A"}</p>
+        </div>
+      </section>
+    </div>
   );
 }
 

@@ -1,46 +1,20 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAnimeSections, mediaQueryKeys } from "../api/mediaApi";
 
-function useAnimeSections(){
-  const [trendingAnime, setTrendingAnime] = useState([]);
-  const [popularAnime, setPopularAnime] = useState([]);
-  const [topRatedAnime, setTopRatedAnime] = useState([]);
+function useAnimeSections() {
+  const { data, isLoading, error } = useQuery({
+    queryKey: mediaQueryKeys.animeSections,
+    queryFn: fetchAnimeSections,
+    staleTime: 1000 * 60 * 10,
+    gcTime: 1000 * 60 * 30,
+  });
 
-  const [animeLoading, setAnimeLoading] = useState(false);
-  const [animeError, setAnimeError] = useState("");
-
-  useEffect(() => {
-    async function fetchAnimeSection() {
-      try{
-        setAnimeLoading(true);
-        setAnimeError("");
-
-        const response = await fetch("/api/anilist");
-
-          if(!response.ok) {
-            throw new Error("Failed to fetch anime");
-          }
-          
-        const data = await response.json();
-
-        setTrendingAnime(data.trendingAnime);
-        setPopularAnime(data.popularAnime); 
-        setTopRatedAnime(data.topRatedAnime);
-      } catch (error) {
-        setAnimeError(error.message);
-      } finally{
-        setAnimeLoading(false);
-      }
-    }
-
-    fetchAnimeSection()    
-  },[]);
-
-  return{
-    trendingAnime, 
-    popularAnime,
-    topRatedAnime, 
-    animeLoading, 
-    animeError
+  return {
+    trendingAnime: data?.trendingAnime || [],
+    popularAnime: data?.popularAnime || [],
+    topRatedAnime: data?.topRatedAnime || [],
+    animeLoading: isLoading,
+    animeError: error?.message || "",
   };
 }
 

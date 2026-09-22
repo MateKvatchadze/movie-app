@@ -1,17 +1,19 @@
 .sidebar {
   width: 312px;
   min-height: 100vh;
-  background-color: #111;
+  background: #0f0f0f;
   color: white;
-  padding: 24px 16px;
+  padding: 32px 18px;
   position: fixed;
   left: 0;
   top: 0;
+  z-index: 1000;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
 }
-
 .sidebarLogo {
-  font-size: 28px;
-  margin: 0 0 32px;
+  font-size: 30px;
+  margin: 0 0 36px;
+  letter-spacing: -1px;
 }
 
 .sidebarGroup {
@@ -19,23 +21,31 @@
   flex-direction: column;
   gap: 8px;
   background: #1a1a1a;
-  padding: 12px;
-  border-radius: 12px;
+  padding: 14px;
+  border-radius: 14px;
   margin-bottom: 14px;
 }
 
 .sidebarLink {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 10px;
   color: #cfcfcf;
   text-decoration: none;
   padding: 12px 14px;
   border-radius: 10px;
   font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.sidebarLink:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
 }
 
 .sidebarLink.active {
-  background: #333;
-  color: white;
+  background: rgba(255, 255, 255, 0.14);
+  color: rgb(255, 255, 255);
 }
 
 .sidebarGroupTitle {
@@ -43,4 +53,81 @@
   color: #818181;
   margin: 0 0 6px;
   font-weight: 700;
+}
+
+.sidebarLink svg {
+  flex-shrink: 0;
+  font-size: 22px;
+}
+
+
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+    height: 72px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: auto;
+    bottom: 0;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .sidebarLogo,
+  .sidebarGroupTitle,
+  .mediaGroup {
+    display: none;
+  }
+
+  .mainGroup,
+  .moreGroup {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+  }
+
+  .sidebarLink {
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 8px 14px;
+    font-size: 11px;
+    min-width: 68px;
+  }
+
+  .sidebarLink svg {
+    font-size: 20px;
+  }
+
+  .sidebarLink:hover {
+    background: transparent;
+    color: #cfcfcf;
+  }
+
+  .sidebarLink.active {
+    background: rgba(255, 255, 255, 0.14);
+    color: white;
+  }  
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    height: 68px;
+    padding: 0 8px;
+  }
+
+  .sidebarLink {
+    padding: 9px 10px;
+    font-size: 11px;
+  }
+  
 }

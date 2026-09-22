@@ -1,42 +1,19 @@
-import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { fetchAnimeDetails, mediaQueryKeys } from "../api/mediaApi";
 
 function useAnimeDetails(id) {
-  const [anime, setAnime] = useState(null);
-  const [animeDetailsLoading, setAnimeDetailsLoading] = useState(false);
-  const [animeDetailsError, setAnimeDetailsError] = useState("");
-
-  useEffect(() => {
-    if (!id) return;
-
-    async function fetchAnimeDetails() {
-      try {
-        setAnimeDetailsLoading(true);
-        setAnimeDetailsError("");
-
-        const response = await fetch(`/api/anilist?id=${id}`);
-        const data = await response.json();
-
-        if (!response.ok || data.error) {
-          setAnimeDetailsError(data.error || "Failed to fetch anime details");
-          return;
-        }
-
-        setAnime(data);
-      } catch (error) {
-        console.log("Anime details error:", error);
-        setAnimeDetailsError("Something went wrong");
-      } finally {
-        setAnimeDetailsLoading(false);
-      }
-    }
-
-    fetchAnimeDetails();
-  }, [id]);
+  const { data, isLoading, error } = useQuery({
+    queryKey: mediaQueryKeys.animeDetails(id),
+    queryFn: () => fetchAnimeDetails(id),
+    enabled: Boolean(id),
+    staleTime: 1000 * 60 * 30,
+    gcTime: 1000 * 60 * 60,
+  });
 
   return {
-    anime,
-    animeDetailsLoading,
-    animeDetailsError,
+    anime: data || null,
+    animeDetailsLoading: isLoading,
+    animeDetailsError: error?.message || "",
   };
 }
 

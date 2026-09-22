@@ -1,5 +1,5 @@
 .heroBanner {
-  min-height: 540px;
+  min-height: 600px;
   border-radius: 16px;
   background-size: cover;
   background-position: center;
@@ -86,4 +86,55 @@
 .heroLogo {
   max-height: 220px;
   max-width: 528px;
+}
+
+
+@media (max-width: 1024px) {
+  .heroBanner {
+    min-height: 520px;
+  }
+
+  .heroContent {
+    padding: 40px 42px;
+  }
+
+  .heroContent h2 {
+    font-size: 44px;
+  }
+
+  .heroLogo {
+    max-width: 420px;
+    max-height: 180px;
+  }
+}
+
+@media (max-width: 600px) {
+  .heroBanner {
+    min-height: 540px;
+    border-radius: 14px;
+    background-position: center;
+  }
+
+  .heroContent {
+    padding: 32px 24px;
+  }
+
+  .heroContent h2 {
+    font-size: 34px;
+  }
+
+  .heroContent p {
+    font-size: 14px;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  .heroPlayButton {
+    padding: 14px 24px;
+  }
+
+  .heroLogo {
+    max-width: 100%;
+    max-height: 150px;
+  }
 }

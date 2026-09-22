@@ -8,8 +8,15 @@ function addMediaType(items, mediaType) {
 }
 
 export async function GET(request) {
+  const options = {
+    headers: {
+      Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
+    },
+  };
+
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type") || "movie";
+  const id = searchParams.get("id");
 
   if (type !== "movie" && type !== "tv") {
     return Response.json(
@@ -18,13 +25,26 @@ export async function GET(request) {
     );
   }
 
-  const options = {
-    headers: {
-      Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
-    },
-  };
-
   try {
+    if (id) {
+      const response = await fetch(`${TMDB_BASE_URL}/${type}/${id}?append_to_response=videos`, options);
+      const data = await response.json();
+
+      if (!response.ok || data.error || data.status_message) {
+        return Response.json(
+          {
+            error:
+              data.error ||
+              data.status_message ||
+              `Failed to fetch ${type} details`,
+          },
+          { status: response.status || 500 }
+        );
+      }
+
+      return Response.json(data);
+    }
+
     const trendingUrl = `${TMDB_BASE_URL}/trending/${type}/week`;
     const popularUrl = `${TMDB_BASE_URL}/${type}/popular`;
     const topRatedUrl = `${TMDB_BASE_URL}/${type}/top_rated`;
@@ -62,7 +82,7 @@ export async function GET(request) {
     console.log("TMDB API error:", error);
 
     return Response.json(
-      { error: "Something went wrong while fetching TMDB sections" },
+      { error: "Something went wrong while fetching TMDB data" },
       { status: 500 }
     );
   }

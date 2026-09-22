@@ -93,18 +93,19 @@ function normalizeAnime(anime) {
 
 function normalizeAnimeDetails(anime) {
   return {
+    id: anime.id,
+    type: "anime",
     title: anime.title.english || anime.title.romaji,
-    description: anime.description,
-    poster_path: anime.coverImage.large,
-    bannerImage: anime.bannerImage,
-    vote_average: anime.averageScore ? anime.averageScore / 10 : null,
+    overview: anime.description,
+    posterPath: anime.coverImage.large,
+    backdropPath: anime.bannerImage,
+    voteAverage: anime.averageScore ? anime.averageScore / 10 : null,
     episodes: anime.episodes,
     duration: anime.duration,
     format: anime.format,
     status: anime.status,
-    release_date: anime.seasonYear ? String(anime.seasonYear) : "",
-    genres: anime.genres,
-    media_type: "anime",    
+    releaseYear: anime.seasonYear ? String(anime.seasonYear) : "Unknown",
+    genres: anime.genres || [],
   };
 }
 
