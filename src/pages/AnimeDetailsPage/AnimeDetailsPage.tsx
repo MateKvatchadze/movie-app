@@ -45,7 +45,7 @@ function AnimeDetailsPage() {
 
           <p className="detailsOverview">{anime.overview}</p>
 
-          {anime.genres?.length > 0 && (
+          {anime.genres && anime.genres.length > 0 && (
             <div className="genresList">
               {anime.genres.map((genre) => (
                 <span key={genre}>{genre}</span>

@@ -7,7 +7,13 @@ import useTvSections from "../../hooks/useTvSections";
 
 import usePrefetchMediaSections from "../../hooks/usePrefetchMediaSections";
 
-function HomePage({ activeHeroMovie, isHeroFading, heroLogo }){
+import type { MovieSection } from "../../api/mediaApi";
+type HomePageProps = {
+  activeHeroMovie: MovieSection;
+  isHeroFading: boolean;
+  heroLogo: string;
+}
+function HomePage({ activeHeroMovie, isHeroFading, heroLogo } :HomePageProps){
   usePrefetchMediaSections();
   
   const { trendingMovies, popularMovies, topRatedMovies } = useMovieSections();

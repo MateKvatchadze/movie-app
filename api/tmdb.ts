@@ -1,13 +1,13 @@
 const TMDB_BASE_URL = "https://api.themoviedb.org/3";
 
-function addMediaType(items, mediaType) {
+function addMediaType(items: object[], mediaType: "movie" | "tv") {
   return items.map((item) => ({
     ...item,
     media_type: mediaType,
   }));
 }
 
-export async function GET(request) {
+export async function GET(request: Request) {
   const options = {
     headers: {
       Authorization: `Bearer ${process.env.TMDB_TOKEN}`,
@@ -45,6 +45,9 @@ export async function GET(request) {
       return Response.json(data);
     }
 
+
+
+    
     const trendingUrl = `${TMDB_BASE_URL}/trending/${type}/week`;
     const popularUrl = `${TMDB_BASE_URL}/${type}/popular`;
     const topRatedUrl = `${TMDB_BASE_URL}/${type}/top_rated`;

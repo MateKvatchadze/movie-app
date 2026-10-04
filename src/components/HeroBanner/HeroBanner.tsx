@@ -1,15 +1,26 @@
 import { Link } from "react-router-dom";
 
 import "./HeroBanner.css";
-
-function HeroBanner({ movie, isHeroFading, heroLogo }) {
+type HeroBannerProps = {
+  movie:{
+    id: number;
+    media_type: string;
+    title: string;
+    poster_path?: string | undefined;
+    release_date?: string | undefined;
+    overview?:string;
+  }
+  isHeroFading:boolean;
+  heroLogo:string;
+}
+function HeroBanner({ movie, isHeroFading, heroLogo }:HeroBannerProps) {console.log("MOVIEE:", movie)
   if(!movie) return null;
-
+  console.log("ВОТ:", movie)
 return (
   <section
     className={`heroBanner ${isHeroFading ? "heroBannerFading" : ""}`}
     style={{
-      backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.backdrop_path})`,
+      backgroundImage: `url(https://image.tmdb.org/t/p/original${movie.poster_path})`,
     }}
   >
     <div className="heroContent">
@@ -23,8 +34,8 @@ return (
         ) : (
           <h2>{movie.title}</h2> 
         ) 
-      };
-
+      }
+  
       <p>{movie.overview}</p>
 
       <div className="heroActions">

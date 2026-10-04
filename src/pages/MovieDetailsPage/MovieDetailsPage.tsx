@@ -10,8 +10,8 @@ function MovieDetailsPage(){
   const type = window.location.pathname.startsWith("/tv") ? "tv" : "movie";
 
   const {data, isLoading, error } = useQuery({
-    queryKey: mediaQueryKeys.mediaDetails(type, id),
-    queryFn: () => fetchMediaDetails(type, id),
+    queryKey: mediaQueryKeys.mediaDetails(type, id!),
+    queryFn: () => fetchMediaDetails(type, id!),
     enabled: Boolean(id && type),
     staleTime: 1000 * 60 * 30,
     gcTime: 1000 * 60 * 60,    

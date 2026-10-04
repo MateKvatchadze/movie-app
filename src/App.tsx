@@ -56,7 +56,7 @@ useEffect(() =>{
         const nextHeroLogo = await heroLogoPath(nextMovie.id);
 
 
-        if(!nextMovie?.backdrop_path){
+        if(!nextMovie?.poster_path){
           setHeroLogo(nextHeroLogo);
           setHeroIndex(nextIndex);
           return;
@@ -88,7 +88,7 @@ useEffect(() =>{
           }
         };
 
-        image.src = `https://image.tmdb.org/t/p/original${nextMovie.backdrop_path}`;    
+        image.src = `https://image.tmdb.org/t/p/original${nextMovie.poster_path}`;    
   }, 4500);
 
     return () => {

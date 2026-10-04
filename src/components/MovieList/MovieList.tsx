@@ -2,9 +2,23 @@ import "./MovieList.css";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 
-function MovieList({ movies, variant="grid" }){
+type MovieListProps = {
+  movies: {
+    id: number;
+    title?: string;
+    format?: string | undefined;
+    media_type?: string | null | undefined;
+    poster_path?: string | null | undefined;
+    release_date?: string | null | undefined;
+    name?: string;
+    first_air_date?: string | undefined;
+  }[] 
+  variant:string;
+}
+
+function MovieList({ movies, variant="grid" }:MovieListProps){
   
-  const rowRef = useRef(null);
+  const rowRef = useRef<HTMLDivElement | null>(null);
 
   function getScrollAmount() {
     if (!rowRef.current) return 0;
