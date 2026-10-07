@@ -5,7 +5,7 @@ import useTvSections from "../../hooks/useTvSections";
 function TVShowsPage() {
 
   const { trendingTvShows, popularTvShows, topRatedTvShows } = useTvSections();     
-  
+  console.log(trendingTvShows)
   return (
   <>
     <section className="movieSection">

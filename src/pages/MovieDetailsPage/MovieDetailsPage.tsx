@@ -21,7 +21,7 @@ function MovieDetailsPage(){
   const navigate = useNavigate()
 
   const movie = data;
-  console.log(movie)
+
   if (isLoading) return <p>Loading movie...</p>;
   if (error) return <p>{error.message}</p>;
   if (!movie) return <p>No movie found</p>;

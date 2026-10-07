@@ -13,9 +13,8 @@ type HeroBannerProps = {
   isHeroFading:boolean;
   heroLogo:string;
 }
-function HeroBanner({ movie, isHeroFading, heroLogo }:HeroBannerProps) {console.log("MOVIEE:", movie)
+function HeroBanner({ movie, isHeroFading, heroLogo }:HeroBannerProps) {
   if(!movie) return null;
-  console.log("ВОТ:", movie)
 return (
   <section
     className={`heroBanner ${isHeroFading ? "heroBannerFading" : ""}`}

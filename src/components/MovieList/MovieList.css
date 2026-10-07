@@ -104,6 +104,7 @@
 }
 
 .posterBox {
+  position: relative;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   background: linear-gradient(135deg, #222, #333);  
 }
@@ -112,6 +113,18 @@
   box-shadow: 0 12px 30px rgba(110, 110, 110, 0.45);
     transform: scale(1.04);
 
+}
+
+.voteRating{
+  position: absolute;
+  top: 13px;
+  left: 10px;
+  font-size: 17px;
+  line-height: 1;
+  background: rgba(0, 0, 0, 0.614);
+  padding: 3px 5px;
+  border-radius: 3px;
+  color: gold;
 }
 
 
@@ -126,6 +139,7 @@
   .moviesRow {
     --visible-cards: 5;
   }
+  
 }
 
 @media (min-width: 1200px) {
@@ -134,7 +148,7 @@
   }
 }
 
-@media (min-width: 1400px) {
+@media (min-width: 1440px) {
   .moviesRow {
     --visible-cards: 7;
   }
@@ -146,14 +160,26 @@
   }
 }
 
+@media (min-width: 1920px) {
+  .moviesRow {
+    --visible-cards: 9;
+  }
+}
+
+@media (min-width: 2400px) {
+  .moviesRow {
+    --visible-cards: 10;
+  }
+}
+
 @media (max-width: 600px) {
   .moviesGrid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 12px;
   }
 
   .moviesRow {
-    --visible-cards: 2.5;
+    --visible-cards: 3.5;
     --gap: 12px;
   }
 

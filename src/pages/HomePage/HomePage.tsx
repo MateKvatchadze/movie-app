@@ -16,7 +16,7 @@ type HomePageProps = {
 function HomePage({ activeHeroMovie, isHeroFading, heroLogo } :HomePageProps){
   usePrefetchMediaSections();
   
-  const { trendingMovies, popularMovies, topRatedMovies } = useMovieSections();
+  const { trendingMovies, popularMovies, topRatedMovies } = useMovieSections();console.log("MOVIESS", trendingMovies)
   const { trendingTvShows, popularTvShows, topRatedTvShows } = useTvSections();                
   return (
     <>

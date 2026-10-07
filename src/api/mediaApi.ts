@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { number, z } from "zod";
 
 const GenreSchema = z.object({
   id: z.number(),
@@ -54,6 +54,7 @@ const CommonMediaSchema = z.object({
   videos: VideosSchema.optional(),
   runtime: z.number().optional(),
   number_of_seasons: z.number().optional(),
+  number_of_episodes: z.number().optional(),
 })
 
 
@@ -93,6 +94,7 @@ function normalizeMediaDetails(media: Media, type: MediaType) {
     backdropPath: media.backdrop_path,
     runtime: media.runtime ?? null,
     seasons: media.number_of_seasons ?? null,
+    episodes: media.number_of_episodes ?? null,
     voteAverage: media.vote_average,
     genres: media.genres || [],
     trailer: getTrailer(media.videos),
@@ -116,6 +118,7 @@ const MovieSectionSchema = z.object({
   release_date: z.string().optional(),
   title: z.string(),  
   overview: z.string().optional(),
+  vote_average: z.number().nullish(),
 });
 export type MovieSection =  z.infer<typeof MovieSectionSchema>;
 
@@ -133,7 +136,7 @@ export async function fetchMovieSections() {
   if (!response.ok || data.error) {
     throw new Error(data.error || "Failed to fetch movies");
   }
-  console.log("looook:", data)
+
   const result = MovieSectionsSchema.safeParse(data);
   
   if (!result.success) {
@@ -151,6 +154,9 @@ const TvSectionSchema = z.object({
   poster_path: z.string().optional(),
   first_air_date: z.string().optional(),
   name: z.string(),  
+  vote_average: z.number().nullish(),
+  number_of_seasons: z.number().optional(),
+  number_of_episodes: z.number().optional(),
 });
 
 const TvSectionsSchema = z.object({
@@ -176,7 +182,19 @@ export async function fetchTvSections() {
   return result.data;
 }
 
-
+const AnimeRelationSchema = z.object({
+  relationType: z.string(),
+  node: z.object({
+    id: z.number(),
+    format: z.string().nullish(),
+    title: z.object({
+      english: z.string().nullish(),
+    }),
+  }),
+});
+const AnimeRelationsSchema = z.object({
+  edges: z.array(AnimeRelationSchema),
+});
 
 const AnimeSectionSchema = z.object({
   format: z.string().optional(),
@@ -185,6 +203,8 @@ const AnimeSectionSchema = z.object({
   poster_path: z.string().optional(),
   release_date: z.string().optional(),
   title: z.string(),
+  vote_average: z.number().nullish(),
+  relations: AnimeRelationsSchema.nullish(),
 });
 
 const AnimeSectionsSchema = z.object({
@@ -200,30 +220,35 @@ export async function fetchAnimeSections() {
   if (!response.ok || data.error) {
     throw new Error(data.error || "Failed to fetch anime");
   }
-
+  console.log(data)
   const result = AnimeSectionsSchema.safeParse(data);
 
   if(!result.success){
-    console.error(result.error);
+    console.error(result.error.issues);
     throw new Error("Invalid Anime section data from API");
   }
   return result.data;
 }
 
-
+const TrailerSchema = z.object({
+  id: z.string(),
+  site: z.enum(["youtube", "dailymotion"]),
+  thumbnail: z.string(),
+});
 
 const AnimeSchema = z.object({
-  posterPath: z.string().optional(),
+  posterPath: z.string().nullish(),
   title: z.string(),
   releaseYear: z.string(),
-  episodes:  z.number().optional(),
-  duration:  z.number().optional(),
+  episodes:  z.number().nullish(),
+  duration:  z.number().nullish(),
   overview: z.string(), 
-  genres: z.array(z.string()).optional(),
-  status: z.string().optional(),
-  format: z.string().optional(),
-  voteAverage: z.number().optional(), 
-})
+  genres: z.array(z.string()).nullish(),
+  status: z.string().nullish(),
+  format: z.string().nullish(),
+  voteAverage: z.number().nullish(), 
+  trailer: TrailerSchema.nullish(),
+}).loose();
 
 export async function fetchAnimeDetails(id: Id) {
   const response = await fetch(`/api/anilist?id=${id}`);
@@ -236,7 +261,7 @@ export async function fetchAnimeDetails(id: Id) {
   const result = AnimeSchema.safeParse(data);
 
   if(!result.success){
-    console.error(result.error);
+    console.error(result.error.issues);
     throw new Error("Invalid Anime data from API");
   }
 

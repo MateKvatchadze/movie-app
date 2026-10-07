@@ -1,13 +1,14 @@
 import { useParams, useNavigate } from "react-router-dom";
 import useAnimeDetails from "../../hooks/useAnimeDetails";
 import "../MovieDetailsPage/MovieDetailsPage.css";
+import DOMPurify from "dompurify";
 
 function AnimeDetailsPage() {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const { anime, animeDetailsLoading, animeDetailsError } = useAnimeDetails(id);
-
+  console.log("ANIMEDETAILS::",anime)
   if (animeDetailsLoading) return <p>Loading anime...</p>;
   if (animeDetailsError) return <p>{animeDetailsError}</p>;
   if (!anime) return <p>No anime found</p>;
@@ -43,7 +44,10 @@ function AnimeDetailsPage() {
             {anime.duration && ` • ${anime.duration} min/ep`}
           </p>
 
-          <p className="detailsOverview">{anime.overview}</p>
+          <div className="detailsOverview"
+             dangerouslySetInnerHTML={{__html: DOMPurify.sanitize(anime.overview),
+             }}
+          ></div>
 
           {anime.genres && anime.genres.length > 0 && (
             <div className="genresList">
@@ -58,6 +62,30 @@ function AnimeDetailsPage() {
           <p>Rating: {anime.voteAverage || "N/A"}</p>
         </div>
       </section>
+
+      {anime.trailer?.site === "youtube" && (
+        <div className="trailerBox">
+          <h2>Trailer</h2>
+
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${anime.trailer.id}`}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      )}
+
+      {anime.trailer?.site === "dailymotion" && (
+        <div className="trailerBox">
+          <h2>Trailer</h2>
+
+          <iframe
+            src={`https://geo.dailymotion.com/player.html?video=${anime.trailer.id}`}
+            allow="fullscreen; autoplay"
+            allowFullScreen
+          />
+        </div>
+      )}    
     </div>
   );
 }

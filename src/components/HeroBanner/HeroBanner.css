@@ -1,5 +1,5 @@
 .heroBanner {
-  min-height: 600px;
+  min-height: 670px;
   border-radius: 16px;
   background-size: cover;
   background-position: center;
@@ -110,7 +110,7 @@
 
 @media (max-width: 600px) {
   .heroBanner {
-    min-height: 540px;
+    min-height: 340px;
     border-radius: 14px;
     background-position: center;
   }

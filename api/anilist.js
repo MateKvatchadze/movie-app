@@ -4,56 +4,51 @@ const query = `
   query {
     trending: Page(page: 1, perPage: 20) {
       media(type: ANIME, sort: TRENDING_DESC) {
-        id
-        title {
-          romaji
-          english
-        }
-        coverImage {
-          large
-        }
-        averageScore
-        episodes
-        format
-        seasonYear
+      ...AnimeFields       
       }
     }
 
     popular: Page(page: 1, perPage: 20) {
       media(type: ANIME, sort: POPULARITY_DESC) {
-        id
-        title {
-          romaji
-          english
-        }
-        coverImage {
-          large
-        }
-        averageScore
-        episodes
-        format
-        seasonYear
+      ...AnimeFields            
       }
     }
 
     topRated: Page(page: 1, perPage: 20) {
-      media(type: ANIME, sort: SCORE_DESC) {
-        id
-        title {
-          romaji
-          english
-        }
-        coverImage {
-          large
-        }
-        averageScore
-        episodes
-        format
-        seasonYear
+      media(type: ANIME, sort: SCORE_DESC) { 
+      ...AnimeFields          
       }
     }
   }
+  fragment AnimeFields on Media {
+    id
+    title {
+      romaji
+      english
+    }
+    coverImage {
+      large
+    }
+    averageScore
+    meanScore
+    episodes
+    format
+    seasonYear
+    relations {
+      edges {
+        relationType
+        node {
+          id
+          format
+          title {
+            english
+          }
+        }
+      }
+    }
+  }    
 `;
+
 
 const detailsQyery = `
   query ($id: Int) {
@@ -63,6 +58,11 @@ const detailsQyery = `
         romaji
         english
       }
+      trailer {
+        id
+        site
+        thumbnail
+      }        
       description
       coverImage {
         large
@@ -83,11 +83,17 @@ function normalizeAnime(anime) {
     id: anime.id,
     title: anime.title.english || anime.title.romaji,
     poster_path: anime.coverImage.large,
-    vote_average: anime.averageScore ? anime.averageScore / 10 : null,
+    vote_average: anime.averageScore
+      ? anime.averageScore / 10
+      : anime.meanScore
+      ? anime.meanScore / 10
+      : null,
+    mean_score: anime.meanScore ? anime.meanScore / 10 : null,
     release_date: anime.seasonYear ? String(anime.seasonYear) : "",
     episodes: anime.episodes,
     format: anime.format,
     media_type: "anime",
+    relations: anime.relations,
   };
 }
 
@@ -106,6 +112,7 @@ function normalizeAnimeDetails(anime) {
     status: anime.status,
     releaseYear: anime.seasonYear ? String(anime.seasonYear) : "Unknown",
     genres: anime.genres || [],
+    trailer: anime.trailer,
   };
 }
 
@@ -158,7 +165,7 @@ export async function GET(request) {
         { status: 500 }
       );
     }
-
+    
     return Response.json({
       trendingAnime: data.data.trending.media.map(normalizeAnime),
       popularAnime: data.data.popular.media.map(normalizeAnime),

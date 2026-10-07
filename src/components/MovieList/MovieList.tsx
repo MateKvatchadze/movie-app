@@ -12,6 +12,7 @@ type MovieListProps = {
     release_date?: string | null | undefined;
     name?: string;
     first_air_date?: string | undefined;
+    vote_average?: number | null;
   }[] 
   variant:string;
 }
@@ -69,6 +70,12 @@ return(
     >
       
       <div className="posterBox">
+        {media.vote_average !== null &&
+          <span className="voteRating">⭐
+            { media.vote_average?.toFixed(1)}
+          </span>
+        }
+
         {media.poster_path && (
           <img className="moviePoster"
               src={
@@ -85,8 +92,8 @@ return(
       </div>
 
       <div className="movieCardInfo">
-        <h3>{media.title}</h3>
-        <h4>{media.release_date?.slice(0, 4)}</h4>
+        <h3>{media.title || media.name}</h3>
+        <h4>{media.release_date?.slice(0, 4) || media.first_air_date?.slice(0, 4)}</h4>
       </div>
           
     </Link>
