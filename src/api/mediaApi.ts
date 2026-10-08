@@ -182,6 +182,8 @@ export async function fetchTvSections() {
   return result.data;
 }
 
+
+
 const AnimeRelationSchema = z.object({
   relationType: z.string(),
   node: z.object({
@@ -220,7 +222,6 @@ export async function fetchAnimeSections() {
   if (!response.ok || data.error) {
     throw new Error(data.error || "Failed to fetch anime");
   }
-  console.log(data)
   const result = AnimeSectionsSchema.safeParse(data);
 
   if(!result.success){

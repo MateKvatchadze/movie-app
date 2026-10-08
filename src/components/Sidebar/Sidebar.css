@@ -60,18 +60,7 @@
   font-size: 22px;
 }
 
-@media (max-width: 480px) {
-  .sidebar {
-    height: 68px;
-    padding: 0 8px;
-  }
 
-  .sidebarLink {
-    padding: 9px 10px;
-    font-size: 11px;
-  }
-  
-}
 
 @media (max-width: 1024px) {
   .sidebar {
@@ -134,6 +123,18 @@
 @media (min-width: 1025px) and (max-width: 1600px) {
   .sidebar {
    width: 290px;
+  }
+  
+}
+@media (max-width: 480px) {
+  .sidebar {
+    height: 98px;
+    padding: 0 8px;
+  }
+
+  .sidebarLink {
+    padding: 9px 10px;
+    font-size: 21px;
   }
   
 }

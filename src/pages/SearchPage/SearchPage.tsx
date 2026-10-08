@@ -1,11 +1,10 @@
 import MovieList from "../../components/MovieList/MovieList";
 
 import useSearch from "../../hooks/useSearch";
-import useMovieSections from "../../hooks/useMovieSections";
-
+import useTrendingMovies from "../../hooks/useTrendingMovies";
+import "./SearchPage.css";
 function SearchPage() {
-  const { trendingMovies } = useMovieSections();
-
+  const { trendingMovies } = useTrendingMovies();
   const {
     query,
     setQuery,
@@ -14,16 +13,32 @@ function SearchPage() {
     error,
   } = useSearch();
 
+  
   return (
     <>
       <h2>Search Page</h2>
 
+    <div className="searchInputWrapper">
+      <span className="searchIcon">⌕</span>
+
       <input
+        className="searchInput"
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Search all content..."
+        placeholder="Search movies, TV shows..."
       />
+
+      {query && (
+        <button
+          className="clearSearch"
+          onClick={() => setQuery("")}
+          aria-label="Clear search"
+        >
+          ×
+        </button>
+      )}
+    </div>
 
       {query.trim() ? (
         <>
