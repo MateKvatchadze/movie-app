@@ -65,8 +65,9 @@
 @media (max-width: 1024px) {
   .sidebar {
     width: 100%;
+    max-width: 100%;
     min-height: auto;
-    height: 72px;
+    height: 144px;
     position: fixed;
     left: 0;
     right: 0;
@@ -101,12 +102,12 @@
     align-items: center;
     gap: 4px;
     padding: 8px 14px;
-    font-size: 11px;
+    font-size: 2.5rem;
     min-width: 68px;
   }
 
   .sidebarLink svg {
-    font-size: 20px;
+    font-size: 2.5rem;
   }
 
   .sidebarLink:hover {
@@ -122,10 +123,29 @@
 
 @media (min-width: 1025px) and (max-width: 1600px) {
   .sidebar {
-   width: 290px;
+    width: 290px;
   }
-  
+
+  .sidebarLink {
+    padding: 9px 10px;
+    font-size: 27px;
+  }
+  .sidebarLink svg {
+    font-size: 32px;
+  }
 }
+
+@media (max-width: 640px) {
+  .sidebarLink {
+    padding: 9px 5px;
+    font-size: 34px;
+  }
+
+  .sidebarLink svg {
+    font-size: 42px;
+  }
+}
+
 @media (max-width: 480px) {
   .sidebar {
     height: 98px;
@@ -136,5 +156,14 @@
     padding: 9px 10px;
     font-size: 21px;
   }
-  
+}
+@media (max-width: 380px) {
+  .sidebarLink {
+    padding: 9px 0px;
+    font-size: 22px;
+  }
+
+  .sidebarLink svg {
+    font-size: 32px;
+  }
 }
