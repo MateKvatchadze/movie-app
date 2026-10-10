@@ -15,7 +15,7 @@ const trendingMoviesSchema = z.object({
   results: z.array(trendingMovieSchema),
 })
 
-async function fetchTrendingMovies() {
+export async function fetchTrendingMovies() {
   const response = await fetch(`/api/trending`);
   const data = await response.json();
 

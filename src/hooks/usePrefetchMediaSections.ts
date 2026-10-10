@@ -6,6 +6,8 @@ import {
   mediaQueryKeys,
 } from "../api/mediaApi";
 
+import { fetchTrendingMovies } from "./useTrendingMovies";
+
 function usePrefetchMediaSections() {
   const queryClient = useQueryClient();
 
@@ -14,6 +16,14 @@ function usePrefetchMediaSections() {
       queryKey: mediaQueryKeys.animeSections,
       queryFn: fetchAnimeSections,
       staleTime: 1000 * 60 * 10,
+      gcTime: 1000 * 60 * 20
+    });
+
+    queryClient.prefetchQuery({
+      queryKey: ["trendingMovies"],
+      queryFn: fetchTrendingMovies,
+      staleTime: 1000 * 60 * 10,
+      gcTime: 1000 * 60 * 20,
     });
   }, [queryClient]);
 }

@@ -62,6 +62,7 @@
   text-decoration: none;
   cursor: pointer;
   min-width: 0;
+  max-width: 200px;
   transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
