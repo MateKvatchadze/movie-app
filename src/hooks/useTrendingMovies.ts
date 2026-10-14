@@ -7,7 +7,8 @@ const trendingMovieSchema = z.object({
   media_type: z.string(),
   poster_path: z.string().optional(),
   release_date: z.string().optional(),
-  title: z.string(),  
+  title: z.string().optional(),
+  name: z.string().optional(),  
   overview: z.string().optional(),
   vote_average: z.number().nullish(),
 });
@@ -24,10 +25,11 @@ export async function fetchTrendingMovies() {
   }
   const result = trendingMoviesSchema.safeParse(data);
   if(!result.success){
-    console.error(result.error);
+    console.error(result.error.issues);
     throw new Error("Invalid Trending Movie data from API");
   }
-  
+  console.log(data)
+  console.log(result.data)
   return result.data;
 }
 
@@ -42,6 +44,7 @@ function useTrendingMovies() {
 
   return {
     trendingMovies: trendingQuery.data?.results || [],
+    trendingLoading: trendingQuery.isLoading,
   };
 }
 

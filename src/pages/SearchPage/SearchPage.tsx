@@ -1,10 +1,10 @@
 import MovieList from "../../components/MovieList/MovieList";
-
+import MovieListSkeleton from "../../components/MovieList/MovieListSkeleton";
 import useSearch from "../../hooks/useSearch";
 import useTrendingMovies from "../../hooks/useTrendingMovies";
 import "./SearchPage.css";
 function SearchPage() {
-  const { trendingMovies } = useTrendingMovies();
+  const { trendingMovies, trendingLoading } = useTrendingMovies();
   const {
     query,
     setQuery,
@@ -40,26 +40,29 @@ function SearchPage() {
       )}
     </div>
 
-      {query.trim() ? (
-        <>
-          <h2>Search Results</h2>
-          <MovieList
-            movies={results}
-            variant="grid"
-          />
-        </>
-      ) : (
-        <>
-          <h2>Trending Now</h2>
-          <MovieList
-            movies={trendingMovies}
-            variant="grid"
-          />
-        </>
-      )}
+    {query.trim() ? (
+      <>
+        <h2>Search Results</h2>
 
-      {loading && <p>Loading...</p>}
-      {error && <p>{error}</p>}
+        {loading ? (
+          <MovieListSkeleton count={20} variant="grid" />
+        ) : error ? (
+          <p>{error}</p>
+        ) : (
+          <MovieList movies={results} variant="grid" />
+        )}
+      </>
+    ) : (
+      <>
+        <h2>Trending Now</h2>
+
+        {trendingLoading ? (
+          <MovieListSkeleton count={30} variant="grid" />
+        ) : (
+          <MovieList movies={trendingMovies} variant="grid" />
+        )}
+      </>
+    )}
     </>
   );
 }

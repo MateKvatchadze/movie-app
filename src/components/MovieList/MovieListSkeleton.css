@@ -1,0 +1,25 @@
+.skeletonMovies {
+  pointer-events: none;
+}
+
+.skeletonMovieCard {
+  min-width: 0;
+  width: 100%;
+  max-width: 200px;
+}
+
+.skeletonMovieInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 10px;
+  padding: 0 5px;
+}
+
+.skeletonMovieInfo .skeleton--text:first-child {
+  height: 12px;
+}
+
+.skeletonMovieInfo .skeleton--text:last-child {
+  height: 16px;
+}

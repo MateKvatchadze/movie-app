@@ -1,17 +1,44 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import z from "zod";
 
+import { z } from "zod";
 
 const SearchSchema = z.looseObject({
-  results: z.array(z.object({
-  id: z.number(),
-  media_type: z.string().nullish(),
-  poster_path: z.string().nullish(),
-  release_date: z.string().nullish(),
-  title: z.string(),     
-  }))
+  results: z.array(
+    z.object({
+      id: z.number(),
+
+      media_type: z.string(),
+
+      title: z.string().nullish(),
+      name: z.string().nullish(),
+      poster_path: z.string().nullish(),
+      release_date: z.string().nullish(),
+      first_air_date: z.string().nullish(),
+      vote_average: z.number().nullish(),
+      overview: z.string().nullish(),
+      format: z.string().nullish(),
+      number_of_seasons: z.number().nullish(),
+      number_of_episodes: z.number().nullish(),
+
+      relations: z.object({
+        edges: z.array(
+          z.object({
+            relationType: z.string(),
+            node: z.object({
+              id: z.number(),
+              title: z.object({
+                english: z.string().nullish(),
+              }),
+              format: z.string().nullish(),
+            }),
+          })
+        ),
+      }).nullish(),
+    })
+  ),
 });
+
 
 async function fetchSearchResults(query:string ) {
   const response = await fetch(`/api/search?query=${encodeURIComponent(query)}`);

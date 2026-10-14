@@ -5,17 +5,32 @@ import { useRef } from "react";
 type MovieListProps = {
   movies: {
     id: number;
-    title?: string;
-    format?: string | undefined;
-    media_type?: string | null | undefined;
-    poster_path?: string | null | undefined;
-    release_date?: string | null | undefined;
-    name?: string;
-    first_air_date?: string | undefined;
+    media_type: string;
+    title?: string  | null;
+    name?: string  | null;
+    format?: string | null;
+    poster_path?: string | null;
+    release_date?: string | null;
+    first_air_date?: string | null;
     vote_average?: number | null;
-  }[] 
-  variant:string;
-}
+    overview?: string  | null;
+    number_of_seasons?: number | null;
+    number_of_episodes?: number | null;
+    relations?: {
+      edges: {
+        relationType: string;
+        node: {
+          id: number;
+          title: {
+            english?: string | null;
+          };
+          format?: string | null;
+        };
+      }[];
+    } | null;
+  }[];
+  variant: string;
+};
 
 function MovieList({ movies, variant="grid" }:MovieListProps){
   
@@ -83,7 +98,7 @@ return(
                 ? media.poster_path
                 : `https://image.tmdb.org/t/p/w200${media.poster_path}`
               }
-              alt={media.title}
+              alt={media.title ?? media.name ?? "Media Poster"}
               onError={(e) => {
               e.currentTarget.style.display = "none"; 
               }}
@@ -92,8 +107,14 @@ return(
       </div>
 
       <div className="movieCardInfo">
+        <div className="movieCardMeta">
+          <h4>{media.media_type?.toUpperCase()}</h4>
+          <h4>{media.release_date?.slice(0, 4) ||
+               media.first_air_date?.slice(0, 4)}
+          </h4>          
+        </div>
+
         <h3>{media.title || media.name}</h3>
-        <h4>{media.release_date?.slice(0, 4) || media.first_air_date?.slice(0, 4)}</h4>
       </div>
           
     </Link>

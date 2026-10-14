@@ -1,8 +1,8 @@
 
 export async function GET() {
-    const pageOneUrl = "https://api.themoviedb.org/3/trending/movie/day?page=1";
-    const pageTwoUrl = "https://api.themoviedb.org/3/trending/movie/day?page=2";
-    const pageThreeUrl = "https://api.themoviedb.org/3/trending/movie/day?page=3";
+    const pageOneUrl = "https://api.themoviedb.org/3/trending/all/day?page=1";
+    const pageTwoUrl = "https://api.themoviedb.org/3/trending/all/day?page=2";
+    const pageThreeUrl = "https://api.themoviedb.org/3/trending/all/day?page=3";
    
    
     const options = {
@@ -22,9 +22,17 @@ export async function GET() {
 
     const allResults = [...data1.results, ...data2.results, ...data3.results];
 
-    const uniqueResults = allResults.filter((movie, index, array) => {
-        return index === array.findIndex((item) => item.id === movie.id);
-    })
+    const mediaResults = allResults.filter(
+      (item) => item.media_type === "movie" || item.media_type === "tv"
+    );
+    
+    const uniqueResults = mediaResults.filter((item, index, array) => {
+      return index === array.findIndex(
+        (result) => 
+          result.id === item.id && 
+          result.media_type === item.media_type
+      );
+    });
 
     return Response.json({
         results: uniqueResults,

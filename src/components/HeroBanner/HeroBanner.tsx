@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-
 import "./HeroBanner.css";
+import HeroBannerSkeleton from "./HeroBannerSkeleton";
 type HeroBannerProps = {
   movie:{
     id: number;
@@ -9,12 +9,12 @@ type HeroBannerProps = {
     poster_path?: string | undefined;
     release_date?: string | undefined;
     overview?:string;
-  }
+  } | null | undefined;
   isHeroFading:boolean;
   heroLogo:string;
 }
 function HeroBanner({ movie, isHeroFading, heroLogo }:HeroBannerProps) {
-  if(!movie) return null;
+  if (!movie) return <HeroBannerSkeleton />;
 return (
   <section
     className={`heroBanner ${isHeroFading ? "heroBannerFading" : ""}`}

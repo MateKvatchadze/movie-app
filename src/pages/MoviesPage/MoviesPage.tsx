@@ -1,28 +1,41 @@
 import MovieList from "../../components/MovieList/MovieList";
 
 import useMovieSections from "../../hooks/useMovieSections";
+import MovieListSkeleton from "../../components/MovieList/MovieListSkeleton";
 
 function MoviesPage() {
-  const { trendingMovies, popularMovies, topRatedMovies } = useMovieSections();
+  const { trendingMovies, popularMovies, topRatedMovies, moviesLoading} = useMovieSections();
 
   return (
   <>
-    <section className="moveieSection">
+    <section className="movieSection">
       <h2>Trending Movies</h2>
-      <MovieList movies={trendingMovies} variant="row"/>
+      {moviesLoading ? (
+        <MovieListSkeleton count={14} variant="row" />
+      ) : (
+        <MovieList movies={trendingMovies} variant="row" />
+      )}
     </section>
 
-    <section className="moveieSection">
+    <section className="movieSection">
       <h2>Popular Movies</h2>
-      <MovieList movies={popularMovies} variant="row"/>
-    </section>    
+      {moviesLoading ? (
+        <MovieListSkeleton count={14} variant="row" />
+      ) : (
+        <MovieList movies={popularMovies} variant="row" />
+      )}      
+    </section>
 
-    <section className="moveieSection">
+    <section className="movieSection">
       <h2>Top Rated Movies</h2>
-      <MovieList movies={topRatedMovies} variant="row"/>
-    </section>    
-    
+      {moviesLoading ? (
+        <MovieListSkeleton count={14} variant="row" />
+      ) : (
+        <MovieList movies={topRatedMovies} variant="row" />
+      )}
+    </section>  
   
+
   </>
   );
 }

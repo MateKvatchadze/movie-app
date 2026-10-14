@@ -151,12 +151,12 @@ export async function fetchMovieSections() {
 const TvSectionSchema = z.object({
   id: z.number(),
   media_type: z.string(),
-  poster_path: z.string().optional(),
-  first_air_date: z.string().optional(),
+  poster_path: z.string().nullish(),
+  first_air_date: z.string().nullish(),
   name: z.string(),  
   vote_average: z.number().nullish(),
-  number_of_seasons: z.number().optional(),
-  number_of_episodes: z.number().optional(),
+  number_of_seasons: z.number().nullish(),
+  number_of_episodes: z.number().nullish(),
 });
 
 const TvSectionsSchema = z.object({
@@ -199,11 +199,11 @@ const AnimeRelationsSchema = z.object({
 });
 
 const AnimeSectionSchema = z.object({
-  format: z.string().optional(),
+  format: z.string().nullish(),
   id: z.number(),
   media_type: z.string(),
   poster_path: z.string().optional(),
-  release_date: z.string().optional(),
+  release_date: z.string().nullish(),
   title: z.string(),
   vote_average: z.number().nullish(),
   relations: AnimeRelationsSchema.nullish(),

@@ -62,7 +62,7 @@
 
 
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
   .sidebar {
     width: 100%;
     max-width: 100%;
@@ -121,17 +121,17 @@
   }  
 }
 
-@media (min-width: 1025px) and (max-width: 1600px) {
+@media (min-width: 1024px) and (max-width: 1600px) {
   .sidebar {
     width: 290px;
   }
 
   .sidebarLink {
     padding: 9px 10px;
-    font-size: 27px;
+    font-size: 22px;
   }
   .sidebarLink svg {
-    font-size: 32px;
+    font-size: 28px;
   }
 }
 

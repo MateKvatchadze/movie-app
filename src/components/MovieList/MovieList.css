@@ -90,18 +90,36 @@
 
 .movieCardInfo {
   display: flex;
-  gap: 12px;
+  flex-direction: column; 
+  gap: 4px;
   align-items: flex-start;
-  margin-top: 10px;
+  margin-top: 6px;
+  padding-left: 5px;
+}
+
+.movieCardMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  padding-bottom: 4px;
 }
 
 .movieCardInfo h3 {
-  flex: 1;
   min-width: 0;
+  width: 100%;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .movieCardInfo h4 {
   flex-shrink: 0;
+  margin: 0;
+  font-size: 12px;
+  color: #575757;
+  font-weight: 500;
 }
 
 .posterBox {
@@ -129,47 +147,77 @@
 }
 
 
-
-@media (min-width: 800px) {
+@media (min-width: 2400px) {
   .moviesRow {
-    --visible-cards: 4;
+    --visible-cards: 11.5;
   }
 }
 
-@media (min-width: 1000px) {
+@media (max-width: 2400px) {
   .moviesRow {
-    --visible-cards: 5;
+    --visible-cards: 11.5;
+  }
+}
+
+@media (max-width: 2100px) {
+  .moviesRow {
+    --visible-cards: 11.5;
+  }
+}
+
+@media (max-width: 1900px) {
+  .moviesRow {
+    --visible-cards: 10.5;
+  }
+}
+
+@media (max-width: 1800px) {
+  .moviesRow {
+    --visible-cards: 9.5;
+  }
+}
+
+@media (max-width: 1600px) {
+  .moviesRow {
+    --visible-cards: 8.5;
+  }
+}
+
+
+@media (max-width: 1440px) {
+  .moviesRow {
+    --visible-cards: 7.5;
+  }
+}
+
+@media (max-width: 1400px) {
+  .moviesRow {
+    --visible-cards: 6.5;
+  }
+}
+
+@media (max-width: 1300px) {
+  .moviesRow {
+    --visible-cards: 5.5;
+  }
+}
+
+@media (max-width: 1200px) {
+  .moviesRow {
+    --visible-cards: 4.5;
+  }
+}
+
+@media (max-width: 1024px) {
+  .moviesRow {
+    --visible-cards: 5.5;
   }
   
 }
 
-@media (min-width: 1200px) {
+@media (max-width: 800px) {
   .moviesRow {
-    --visible-cards: 6;
-  }
-}
-
-@media (min-width: 1440px) {
-  .moviesRow {
-    --visible-cards: 7;
-  }
-}
-
-@media (min-width: 1600px) {
-  .moviesRow {
-    --visible-cards: 8;
-  }
-}
-
-@media (min-width: 1920px) {
-  .moviesRow {
-    --visible-cards: 9;
-  }
-}
-
-@media (min-width: 2400px) {
-  .moviesRow {
-    --visible-cards: 10;
+    --visible-cards: 4.5;
   }
 }
 
