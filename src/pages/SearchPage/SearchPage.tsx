@@ -3,6 +3,7 @@ import MovieListSkeleton from "../../components/MovieList/MovieListSkeleton";
 import useSearch from "../../hooks/useSearch";
 import useTrendingMovies from "../../hooks/useTrendingMovies";
 import "./SearchPage.css";
+import { useState } from "react";
 function SearchPage() {
   const { trendingMovies, trendingLoading } = useTrendingMovies();
   const {
@@ -12,7 +13,7 @@ function SearchPage() {
     loading,
     error,
   } = useSearch();
-
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
   
   return (
     <>
@@ -38,7 +39,22 @@ function SearchPage() {
           ×
         </button>
       )}
+
+      <button
+        className="searchFilterButton"
+        type="button"
+        aria-label="Filter search results"
+        onClick={() => setIsFilterOpen((prev) => !prev)}
+      >
+        All
+        <span aria-hidden="true">⌄</span>
+      </button>  
+      {isFilterOpen && (
+        <div className="searchFilterMenu">Filter open</div>
+      )}    
     </div>
+
+
 
     {query.trim() ? (
       <>

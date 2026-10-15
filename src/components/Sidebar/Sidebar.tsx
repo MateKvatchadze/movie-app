@@ -1,59 +1,76 @@
 import "./Sidebar.css";
-import {
-  FiHome, FiSearch, FiGrid, FiFilm, FiTv, FiStar, FiMoreHorizontal,
-} 
-from "react-icons/fi";
+import SidebarNavigation from "./SidebarNavigation";
+import { FiSearch } from "react-icons/fi";
 import { NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 function Sidebar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
+
   return (
     <aside className="sidebar" aria-label="Main navigation">
-      <h1 className="sidebarLogo">CineVault</h1>
 
-      <nav className="sidebarGroup mainGroup">
-        <NavLink to="/" className="sidebarLink">
-          <FiHome />
-          <span>Home</span>
-        </NavLink>
-
-        <NavLink to="/search" className="sidebarLink">
+      <div className="buttonsWrapper">
+        <NavLink
+          to="/search"
+          className="mobileSearchButton"
+          aria-label="Search"
+        >
           <FiSearch />
-          <span>Search</span>
         </NavLink>
 
-        <NavLink to="/browse" className="sidebarLink">
-          <FiGrid />
-          <span>Browse</span>
-        </NavLink>
-      </nav>
+        <button
+          className="mobileMenuButton"
+          type="button"
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+          onClick={() => setIsMenuOpen((prev) => !prev)}
+        >
+          ☰
+        </button>
+      </div>
 
-      <nav className="sidebarGroup mediaGroup" aria-label="Media navigation">
-        <p className="sidebarGroupTitle">MEDIA</p>
+      {isMenuOpen && (
+        <div
+          className="mobileMenuOverlay"
+          onClick={() => setIsMenuOpen(false)}
+        >
+          <nav className="mobileMenu" aria-label="Mobile navigation">
+            <div
+              className="mobileMenuContent"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                type="button"
+                className="mobileMenuClose"
+                onClick={() => setIsMenuOpen(false)}
+                aria-label="Close menu"
+              >
+                ×
+              </button>
 
-        <NavLink to="/movies" className="sidebarLink">
-          <FiFilm />
-          <span>Movies</span>
-        </NavLink>
+              <SidebarNavigation
+                onNavigate={() => setIsMenuOpen(false)}
+              />
+            </div>
+          </nav>
+        </div>
+      )}
+      
+      <NavLink to="/" className="sidebarLogo">
+        CineVault
+      </NavLink>
 
-        <NavLink to="/tv" className="sidebarLink">
-          <FiTv />
-          <span>TV Shows</span>
-        </NavLink>
-
-        <NavLink to="/anime" className="sidebarLink">
-          <FiStar />
-          <span>Anime</span>
-        </NavLink>
-      </nav>
-
-      <nav className="sidebarGroup moreGroup">
-        <p className="sidebarGroupTitle">MORE</p>
-
-        <NavLink to="/credits" className="sidebarLink">
-          <FiMoreHorizontal />
-          <span>More</span>
-        </NavLink>
-      </nav>
+      <SidebarNavigation />
+      
     </aside>
   );
 }
