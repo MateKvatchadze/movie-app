@@ -17,8 +17,6 @@ function SearchPage() {
   
   return (
     <>
-      <h2>Search Page</h2>
-
     <div className="searchInputWrapper">
       <span className="searchIcon">⌕</span>
 
