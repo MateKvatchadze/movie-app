@@ -16,8 +16,8 @@ const trendingMoviesSchema = z.object({
   results: z.array(trendingMovieSchema),
 })
 
-export async function fetchTrendingMovies() {
-  const response = await fetch(`/api/trending`);
+export async function fetchTrendingMovies(type: "multi" | "movie" | "tv" = "multi") {
+  const response = await fetch(`/api/trending?type=${type}`);
   const data = await response.json();
 
   if(!response.ok || data.error) {
@@ -34,10 +34,10 @@ export async function fetchTrendingMovies() {
 }
 
 
-function useTrendingMovies() {
+function useTrendingMovies(type: "multi" | "movie" | "tv" ) {
   const trendingQuery = useQuery({
-    queryKey: ["trendingMovies"],
-    queryFn: fetchTrendingMovies,
+    queryKey: ["trendingMovies", type],
+    queryFn: () => fetchTrendingMovies(type),
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 20,
   });

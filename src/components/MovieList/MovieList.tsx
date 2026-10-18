@@ -85,11 +85,12 @@ return(
     >
       
       <div className="posterBox">
-        {media.vote_average !== null &&
-          <span className="voteRating">⭐
-            { media.vote_average?.toFixed(1)}
+          {media.vote_average != null && media.vote_average > 0 && (
+          <span className="voteRating">
+          <span className="voteRatingStar" aria-hidden="true">★</span>
+          <span>{media.vote_average.toFixed(1)}</span>
           </span>
-        }
+          )}
 
         {media.poster_path && (
           <img className="moviePoster"

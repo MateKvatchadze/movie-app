@@ -5,7 +5,7 @@
   min-height: 100vh;
   background: #0d0d0f;
   color: #ededed;
-  padding: 32px 18px;
+  padding: 16px 18px;
   position: fixed;
   left: 0;
   top: 0;
@@ -50,12 +50,16 @@
 .sidebarLogo {
   font-family: 'Ethnocentric';
   src: url('fonts/ethnocentric-rg.ttf') format('truetype');  
-  font-size: 30px;
-  margin: 0 0 36px;
+  margin-bottom: 10px;
   letter-spacing: -1px;
   color: inherit;
   text-decoration: none;
   cursor: pointer;
+  font-size: 3rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    top: 4px;
 }
 
 .sidebarGroup {
@@ -105,18 +109,15 @@
 .mobileMenuOverlay {
   position: fixed;
   inset: 0;
-  z-index: 1001;
-
+  z-index: 2000; 
   background: rgba(0, 0, 0, 0.929);
 }
 
 .mobileMenu {
   position: absolute;
   inset: 0;
-
   overflow-y: auto;
-  padding: 76px 0px 24px;
-
+  padding: 76px 0 24px;
   background: transparent;
 }
 
@@ -124,7 +125,7 @@
   position: fixed;
   top: 20px;
   right: 16px;
-  z-index: 1001;
+  z-index: 2001;
 
   width: 40px;
   height: 40px;
@@ -141,7 +142,7 @@
 .mobileMenuContent {
   position: relative;
   width: 100%;
-  height: 546px;
+  min-height: 546px;
   padding-left: 16px;
   padding-right: 16px;
 }
@@ -174,7 +175,16 @@
     align-items: center;
     justify-content: center;
     border-bottom: 1px solid rgba(255, 255, 255, 0.141);
+    transition: transform 0.3s ease;    
   }
+  .sidebar.headerVisible {
+    transform: translateY(0);
+  }
+
+  .sidebar.headerHidden {
+    transform: translateY(-100%);
+  }
+  
 
   .moreGroup,
   .mainGroup,

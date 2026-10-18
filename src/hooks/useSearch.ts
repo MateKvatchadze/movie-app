@@ -40,8 +40,8 @@ const SearchSchema = z.looseObject({
 });
 
 
-async function fetchSearchResults(query:string ) {
-  const response = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
+async function fetchSearchResults(query:string, type: "multi" | "movie" | "tv" ) {
+  const response = await fetch(`/api/search?query=${encodeURIComponent(query)}&type=${type}`);
   const data = await response.json();
 
   const result = SearchSchema.safeParse(data);
@@ -57,14 +57,14 @@ async function fetchSearchResults(query:string ) {
   return result.data;
 }
 
-function useSearch() {
+function useSearch(type: "multi" | "movie" | "tv") {
   const [query, setQuery] = useState("");
 
   const trimmedQuery = query.trim();
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["search", trimmedQuery],
-    queryFn: () => fetchSearchResults(trimmedQuery),
+    queryKey: ["search", trimmedQuery, type],
+    queryFn: () => fetchSearchResults(trimmedQuery, type),
     enabled: Boolean(trimmedQuery),
     staleTime: 1000 * 60 * 2,
     gcTime: 1000 * 60 * 10,

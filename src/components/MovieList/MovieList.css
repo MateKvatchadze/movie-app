@@ -30,7 +30,7 @@
 
 .moviesGrid {
   display: grid;
-  gap: 16px;
+  gap: 14px;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
@@ -134,16 +134,46 @@
 
 }
 
-.voteRating{
+.voteRating {
   position: absolute;
-  top: 13px;
+  top: 12px;
   left: 10px;
-  font-size: 17px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 7px;
+  background: rgba(12, 12, 15, 0.88);
+  backdrop-filter: blur(8px);
+  color: #f4f4f5;
+  font-size: 13px;
+  font-weight: 700;
   line-height: 1;
-  background: rgba(0, 0, 0, 0.614);
-  padding: 3px 5px;
-  border-radius: 3px;
-  color: gold;
+  font-variant-numeric: tabular-nums;
+}
+
+.voteRatingStar {
+  color: #f5c451;
+  font-size: 14px;
+}
+
+
+
+@media (max-width: 600px) {
+  .voteRating {
+    top: 7px;
+    left: 6px;
+    gap: 3px;
+    padding: 5px 6px;
+    font-size: 11px;
+  }
+
+  .voteRatingStar {
+    font-size: 12px;
+  }
+
+
 }
 
 
@@ -200,36 +230,54 @@
   .moviesRow {
     --visible-cards: 5.5;
   }
+  .moviesGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 12px;
+  }   
 }
 
 @media (max-width: 1200px) {
   .moviesRow {
     --visible-cards: 4.5;
+    --gap: 14px;     
   }
+  .moviesGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }    
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
   .moviesRow {
     --visible-cards: 5.5;
+    --gap: 12px;    
   }
-  
+  .moviesGrid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+  }    
 }
 
 @media (max-width: 800px) {
   .moviesRow {
     --visible-cards: 4.5;
+    --gap: 9px;    
   }
+  .moviesGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px;
+  }  
 }
 
 @media (max-width: 600px) {
   .moviesGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    gap: 6px;
   }
 
   .moviesRow {
     --visible-cards: 3.5;
-    --gap: 12px;
+    --gap: 6px;
   }
 
   .rowControls {
