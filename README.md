@@ -2,7 +2,7 @@
 
 A React-based media discovery application built with TypeScript, integrating TMDB REST API and AniList GraphQL API.
 
-[![Open Live Demo](https://img.shields.io/badge/OPEN%20LIVE%20DEMO-252833?style=for-the-badge)](https://movie-app-five-sigma-57.vercel.app)
+[![Open Live Demo](https://img.shields.io/badge/OPEN%20LIVE%20DEMO-252833?style=for-the-badge)](https://movie-app-five-sigma-57.vercel.app) ◉
 
 [View Source Code](https://github.com/MateKvatchadze/movie-app)
 
