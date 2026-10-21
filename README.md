@@ -1,39 +1,68 @@
 # CineVault
 
-**Movies, TV shows, and anime — one place to discover what to watch next.**
+A React-based media discovery application built with TypeScript, integrating TMDB REST API and AniList GraphQL API.
 
-CineVault is a responsive media discovery platform that brings together movie and TV data from TMDB and anime from AniList. Built with React and TypeScript, it combines a dark, media-focused interface with search, dedicated detail pages, and efficient server-state management.
-
-**[Live Demo](https://movie-app-five-sigma-57.vercel.app) · [GitHub Repository](https://github.com/MateKvatchadze/movie-app)**
-
-## Features
-
-- **Three media categories:** discover movies, TV shows, and anime in one application.
-- **Search & discovery:** explore trending content and filter movie and TV search results by media type.
-- **Detailed media pages:** browse available metadata, ratings, artwork, and trailer information.
-- **Dynamic home page:** featured media, curated sections, and reusable media components.
-- **Responsive UI:** dark theme, adaptive navigation, and layouts for desktop and mobile.
-- **Smooth loading experience:** skeleton states keep the interface structured while data loads.
+[Live Demo](https://movie-app-five-sigma-57.vercel.app) · [Repository](https://github.com/MateKvatchadze/movie-app)
 
 ## Tech Stack
 
-**Frontend:** React, TypeScript, Vite, React Router, CSS
+- **React** — component-based UI, reusable components, hooks, and state management
+- **TypeScript** — static typing for application logic and data handling
+- **React Router** — client-side routing and dynamic media detail pages
+- **TanStack Query** — server-state management, query caching, stale-time and garbage-collection policies, and data prefetching
+- **Zod** — runtime validation of external API data
+- **Vite** — development environment and production builds
+- **Vercel Functions** — server-side API handlers and environment-based secret management
+- **DOMPurify** — sanitization of HTML descriptions before rendering
+- **CSS** — responsive layouts, adaptive navigation, and loading skeletons
 
-**Data & APIs:** TanStack Query, Zod, TMDB REST API, AniList GraphQL API
+## Key Implementations
 
-**Infrastructure & utilities:** Vercel Functions, DOMPurify, React Icons
+### Multiple API Integrations
 
-## Technical Highlights
+- **TMDB REST API:** movie and TV data, trending results, media metadata, images, and available video information.
+- **AniList GraphQL API:** anime discovery and detailed anime data, including available trailer and media relationship information.
+- **Data normalization:** API-specific responses are adapted for use across shared media components.
+- **Search:** movie and TV search with media-type filtering and URL search parameters.
 
-- **API architecture:** server-side Vercel Functions handle external API requests, keeping the TMDB access token out of client-side code.
-- **Caching & prefetching:** TanStack Query manages server state, cache lifetimes, and prefetching to reduce unnecessary requests during navigation.
-- **Runtime validation:** Zod validates supported API data, while TypeScript provides static type checking.
-- **Content safety:** DOMPurify sanitizes HTML descriptions before rendering.
-- **Multi-source data handling:** data from TMDB and AniList is adapted for use across the application's media interface.
+### Server-State Management
+
+- Custom React hooks separate data-fetching logic from UI components.
+- TanStack Query manages caching, query freshness, cache retention, and request deduplication.
+- Prefetching prepares selected media data before it is needed by the corresponding view.
+- Loading states and skeleton components provide consistent UI while requests are pending.
+
+### Type Safety and Data Handling
+
+- TypeScript types describe application data and component interfaces.
+- Zod schemas validate external data at runtime where implemented.
+- Separate API handlers isolate upstream API requests from the frontend.
+- The TMDB access token is read from a server-side environment variable rather than exposed in client-side code.
+
+### Media Details and Rendering
+
+- Dedicated movie, TV, and anime detail pages.
+- Trailer integration for supported media, including YouTube and Dailymotion sources where available.
+- DOMPurify sanitization for HTML descriptions before rendering.
+- Responsive layouts for desktop and mobile screens.
+
+## Architecture
+
+```text
+src/
+  api/          Shared media data-access layer
+  components/   Reusable UI and skeleton components
+  hooks/        Data-fetching and query logic
+  pages/        Route-level views
+
+api/            Vercel serverless API handlers
+```
+
+The frontend uses a shared data-access layer and custom hooks to connect React components with TanStack Query. Vercel Functions handle external API requests, while source-specific response handling keeps TMDB and AniList integration separate from presentation logic.
 
 ## Run Locally
 
-Requirements: Node.js, npm, and a TMDB API access token.
+**Requirements:** Node.js, npm, and a TMDB API access token.
 
 ```bash
 git clone https://github.com/MateKvatchadze/movie-app.git
@@ -47,15 +76,22 @@ Create a `.env.local` file in the project root:
 TMDB_TOKEN=your_tmdb_access_token
 ```
 
-Start the application with Vercel's local development environment so the `/api` functions are available:
+Run the application with the local Vercel development environment to support the `/api` functions:
 
 ```bash
 npx vercel dev
 ```
 
+Available project checks:
+
+```bash
+npm run build
+npm run lint
+```
+
 ## Data Sources
 
-- **TMDB** — movie and television metadata, images, and trending data. This product uses the TMDB API but is not endorsed or certified by TMDB.
-- **AniList** — anime metadata through the AniList GraphQL API.
+- [TMDB API](https://developer.themoviedb.org/docs) — movie and TV metadata.
+- [AniList GraphQL API](https://docs.anilist.co/) — anime metadata.
 
-CineVault is an independent portfolio project and is not a video streaming service.
+This product uses the TMDB API but is not endorsed or certified by TMDB.
