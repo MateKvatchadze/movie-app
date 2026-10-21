@@ -38,8 +38,6 @@ if (isLoading) return <DetailsPageSkeleton />;
         <span>Back</span>
       </button>
 
-      <p className="detailsType">{isTV ? "TV Series" : "Movie"}</p>
-
       <section className="detailsHero">
         {media.backdropPath && (
           <div className="detailsBackdrop" aria-hidden="true">
@@ -92,9 +90,10 @@ if (isLoading) return <DetailsPageSkeleton />;
 
           {media.genres?.length > 0 && (
             <div className="genresList">
+              <span>{isTV ? "TV Series" : "Movie"}</span>
               {media.genres.map((genre) => (
                 <span key={genre.id}>{genre.name}</span>
-              ))}
+              ))}              
             </div>
           )}
 

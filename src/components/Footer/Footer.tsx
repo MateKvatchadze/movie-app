@@ -20,7 +20,6 @@ function Footer() {
 
         <nav className="footerNavigation" aria-label="Footer navigation">
           <Link to="/">Home</Link>
-          <Link to="/browse">Browse</Link>
           <Link to="/movies">Movies</Link>
           <Link to="/tv">TV Shows</Link>
           <Link to="/anime">Anime</Link>

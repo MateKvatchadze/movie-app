@@ -6,7 +6,6 @@ import { heroLogoPath } from "./components/HeroBanner/heroLogoPath";
 import HomePage from "./pages/HomePage/HomePage";
 import SearchPage from "./pages/SearchPage/SearchPage";
 import MovieDetailsPage from "./pages/MovieDetailsPage/MovieDetailsPage";
-import BrowsePage from "./pages/BrowsePage/BrowsePage";
 import MoviesPage from "./pages/MoviesPage/MoviesPage";
 import TVShowsPage from "./pages/TVShowsPage/TVShowsPage";
 import AnimePage from "./pages/AnimePage/AnimePage";
@@ -118,7 +117,6 @@ function App() {
           <Route path="/movie/:id" element={<MovieDetailsPage />} />
           <Route path="/tv/:id" element={<MovieDetailsPage />} />
           <Route path="/anime/:id" element={<AnimeDetailsPage />} />
-          <Route path="/browse" element={<BrowsePage />} />
           <Route path="/movies" element={<MoviesPage />} />
           <Route path="/tv" element={<TVShowsPage />} />
           <Route path="/anime" element={<AnimePage />} />

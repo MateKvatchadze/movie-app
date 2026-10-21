@@ -12,7 +12,16 @@
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.08);
 }
-
+.typeEmoji svg {
+  color: white;
+  background-color: #2222225c;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+}
 .rowButton {
   width: 44px;
   height: 36px;
@@ -31,6 +40,7 @@
 .moviesGrid {
   display: grid;
   gap: 14px;
+  row-gap: 25px;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
 }
 
@@ -91,7 +101,7 @@
 .movieCardInfo {
   display: flex;
   flex-direction: column; 
-  gap: 4px;
+  gap: 0px;
   align-items: flex-start;
   margin-top: 6px;
   padding-left: 5px;
@@ -233,6 +243,7 @@
   .moviesGrid {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 12px;
+    row-gap: 25px;
   }   
 }
 
@@ -244,6 +255,7 @@
   .moviesGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 12px;
+    row-gap: 25px;
   }    
 }
 
@@ -255,6 +267,7 @@
   .moviesGrid {
     grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 10px;
+    row-gap: 25px;  
   }    
 }
 
@@ -266,6 +279,7 @@
   .moviesGrid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 12px;
+    row-gap: 25px;  
   }  
 }
 
@@ -273,6 +287,7 @@
   .moviesGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 6px;
+    row-gap: 20px;
   }
 
   .moviesRow {
@@ -299,7 +314,7 @@
   }
 
   .movieCardInfo {
-    gap: 8px;
+    gap: 1px;
   }
 
   .movieCard:hover {

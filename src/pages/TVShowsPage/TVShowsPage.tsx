@@ -6,7 +6,6 @@ import MovieListSkeleton from "../../components/MovieList/MovieListSkeleton";
 function TVShowsPage() {
 
   const { trendingTvShows, popularTvShows, topRatedTvShows, tvLoading} = useTvSections();     
-  console.log(trendingTvShows)
   return (
   <>
     <section className="movieSection">

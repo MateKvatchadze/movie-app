@@ -28,8 +28,6 @@ export async function fetchTrendingMovies(type: "multi" | "movie" | "tv" = "mult
     console.error(result.error.issues);
     throw new Error("Invalid Trending Movie data from API");
   }
-  console.log(data)
-  console.log(result.data)
   return result.data;
 }
 

@@ -24,7 +24,7 @@ function HomePage({ activeHeroMovie, isHeroFading, heroLogo } :HomePageProps){
     popularMovies, 
     topRatedMovies,
     moviesLoading,  
-  } = useMovieSections();console.log("MOVIESS", trendingMovies);
+  } = useMovieSections();
 
   const { 
     trendingTvShows, 

@@ -1,6 +1,7 @@
 import "./MovieList.css";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
+import { FiFilm, FiTv, } from "react-icons/fi";
 
 type MovieListProps = {
   movies: {
@@ -88,9 +89,12 @@ return(
           {media.vote_average != null && media.vote_average > 0 && (
           <span className="voteRating">
           <span className="voteRatingStar" aria-hidden="true">★</span>
+         
           <span>{media.vote_average.toFixed(1)}</span>
           </span>
-          )}
+          )} 
+          
+          <span className="typeEmoji">{media.media_type === "movie" ? <FiFilm /> : <FiTv />  }</span>
 
         {media.poster_path && (
           <img className="moviePoster"

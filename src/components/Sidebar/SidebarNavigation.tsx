@@ -27,10 +27,6 @@ function SidebarNavigation({ onNavigate }: SidebarNavigationProps) {
           <span>Search</span>
         </NavLink>
 
-        <NavLink to="/browse" className="sidebarLink" onClick={onNavigate}>
-          <FiGrid />
-          <span>Browse</span>
-        </NavLink>
       </nav>
 
       <nav className="sidebarGroup mediaGroup" aria-label="Media navigation">

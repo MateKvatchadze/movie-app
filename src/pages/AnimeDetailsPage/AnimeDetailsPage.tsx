@@ -8,7 +8,6 @@ function AnimeDetailsPage() {
   const navigate = useNavigate();
 
   const { anime, animeDetailsLoading, animeDetailsError } = useAnimeDetails(id);
-  console.log("ANIMEDETAILS::",anime)
   if (animeDetailsLoading) return <p>Loading anime...</p>;
   if (animeDetailsError) return <p>{animeDetailsError}</p>;
   if (!anime) return <p>No anime found</p>;
