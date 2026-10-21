@@ -8,15 +8,15 @@ A React-based media discovery application built with TypeScript, integrating TMD
 
 ## Tech Stack
 
-- **React** — component-based UI, reusable components, hooks, and state management
-- **TypeScript** — static typing for application logic and data handling
-- **React Router** — client-side routing and dynamic media detail pages
-- **TanStack Query** — server-state management, query caching, stale-time and garbage-collection policies, and data prefetching
-- **Zod** — runtime validation of external API data
-- **Vite** — development environment and production builds
-- **Vercel Functions** — server-side API handlers and environment-based secret management
-- **DOMPurify** — sanitization of HTML descriptions before rendering
-- **CSS** — responsive layouts, adaptive navigation, and loading skeletons
+- **Frontend:** React 19, TypeScript, React Router 7, CSS
+- **Data Fetching & Caching:** TanStack Query v5
+- **API Integration:** TMDB REST API, AniList GraphQL API
+- **Validation:** Zod v4
+- **Backend & Deployment:** Vercel Functions, environment variables
+- **Build Tooling:** Vite 8, Node.js, npm
+- **Security:** DOMPurify
+- **UI Utilities:** React Icons
+- **Code Quality:** ESLint 10
 
 ## Key Implementations
 
