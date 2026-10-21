@@ -18,7 +18,6 @@ function AnimeDetailsPage() {
         ⬅️ Back
       </button>
 
-      <p className="detailsType">Anime</p>
 
       <section className="detailsHero">
         <div className="detailsPosterBox">
@@ -50,6 +49,7 @@ function AnimeDetailsPage() {
 
           {anime.genres && anime.genres.length > 0 && (
             <div className="genresList">
+              <span>Anime</span>
               {anime.genres.map((genre) => (
                 <span key={genre}>{genre}</span>
               ))}
