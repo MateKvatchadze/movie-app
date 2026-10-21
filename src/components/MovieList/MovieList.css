@@ -170,22 +170,6 @@
 
 
 
-@media (max-width: 600px) {
-  .voteRating {
-    top: 7px;
-    left: 6px;
-    gap: 3px;
-    padding: 5px 6px;
-    font-size: 11px;
-  }
-
-  .voteRatingStar {
-    font-size: 12px;
-  }
-
-
-}
-
 
 @media (min-width: 2400px) {
   .moviesRow {
@@ -260,6 +244,13 @@
 }
 
 @media (max-width: 1023px) {
+  .voteRating {
+    top: 8px;
+    left: 7px;
+    gap: 3px;
+    padding: 5px 6px;
+    font-size: 11px;
+  } 
   .moviesRow {
     --visible-cards: 5.5;
     --gap: 12px;    
@@ -284,6 +275,13 @@
 }
 
 @media (max-width: 600px) {
+  .voteRating {
+    top: 6px;
+    left: 5px;
+    gap: 3px;
+    padding: 5px 6px;
+    font-size: 11px;
+  }
   .moviesGrid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 6px;
@@ -325,4 +323,15 @@
   .movieCard:hover .posterBox {
     box-shadow: none;
   }
+}
+
+@media (max-width: 400px) {
+  .voteRating {
+    top: 5px;
+    left: 4px;
+    gap: 3px;
+    padding: 4px 5px;
+    font-size: 11px;
+  }
+
 }
