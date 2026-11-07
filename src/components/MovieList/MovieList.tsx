@@ -1,8 +1,9 @@
 import "./MovieList.css";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
-import { FiFilm, FiTv, } from "react-icons/fi";
-
+import { FiFilm, FiStar, FiTv, } from "react-icons/fi";
+import arrowLeft from "../../assets/icons/arrow-left.svg";
+import arrowRight from "../../assets/icons/arrow-right.svg";
 type MovieListProps = {
   movies: {
     id: number;
@@ -57,7 +58,7 @@ function MovieList({ movies, variant="grid" }:MovieListProps){
     rowRef.current.scrollBy({
       left: getScrollAmount() -200,
       behavior: "smooth",
-    })
+    });
   }
 
 return(
@@ -65,11 +66,11 @@ return(
   {variant === "row" && ( 
     <div className="rowControls">
       <button className="rowButton" onClick={scrollLeft}>
-        ⬅️
+        <img src={arrowLeft} alt="" />
       </button>
 
       <button className="rowButton" onClick={scrollRight}>
-        ➡️
+        <img src={arrowRight} alt="" />
       </button>
     </div>
   )}
@@ -99,7 +100,11 @@ return(
             <span>0</span>
           </span>)} 
           
-          <span className="typeEmoji">{media.media_type === "movie" ? <FiFilm /> : <FiTv />  }</span>
+          <span className="typeEmoji">{
+              media.media_type === "movie" ? (<FiFilm />) 
+            : media.media_type === "anime" ? (<FiStar />)
+            : <FiTv />  
+          }</span>
 
         {media.poster_path && (
           <img className="moviePoster"

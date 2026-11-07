@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import useAnimeDetails from "../../hooks/useAnimeDetails";
 import "../MovieDetailsPage/MovieDetailsPage.css";
 import DOMPurify from "dompurify";
+import arrowLeft from "../../assets/icons/arrow-left.svg";
 
 function AnimeDetailsPage() {
   const { id } = useParams();
@@ -15,7 +16,8 @@ function AnimeDetailsPage() {
   return (
     <div className="detailsPage">
       <button className="backButton" onClick={() => navigate(-1)}>
-        ⬅️ Back
+        <img src={arrowLeft} alt="" />
+        <span>Back</span>
       </button>
 
 

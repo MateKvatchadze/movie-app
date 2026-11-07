@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router-dom";
 import { fetchMediaDetails, mediaQueryKeys } from "../../api/mediaApi";
 import DetailsPageSkeleton from "./DetailspageSkeleton";
+import arrowLeft from "../../assets/icons/arrow-left.svg";
 
 function MovieDetailsPage() {
   const { id } = useParams();
@@ -34,7 +35,7 @@ if (isLoading) return <DetailsPageSkeleton />;
         type="button"
         onClick={() => navigate(-1)}
       >
-        <span aria-hidden="true">←</span>
+        <img src={arrowLeft} alt="" />
         <span>Back</span>
       </button>
 
